@@ -16,7 +16,7 @@ typedef struct {
   BatteryParameterList parameter;
   float minimumThreshold;
   float maximumThreshold;
-  char *parameterName[100];
+  char parameterName[100];
 } BatteryParameterInfo;
 
 /* To keep track of Testcase number for ease of mapping testcase outcome to input parameters*/
@@ -26,11 +26,11 @@ BatteryParameterInfo parameterInfo [NoOfParameter] ;
 
 void PopulateParameterInfo(){
   	parameterInfo[0].parameter = TempParameter;
-	parameterInfo[0].parameterName = "Temperature";
+	strcpy(parameterInfo[0].parameterName,"Temperature");
 	parameterInfo[1].parameter = SOCParameter;
-	parameterInfo[1].parameterName = "SOC";
+	strcpy(parameterInfo[1].parameterName, "SOC");
 	parameterInfo[2].parameter = ChargeRateParameter;
-	parameterInfo[2].parameterName = "Charge Rate";  
+	strcpy(parameterInfo[2].parameterName, "Charge Rate");  
 }
 	
 void setRangeValues(char * ParameterName, float min, float max)
