@@ -45,11 +45,11 @@ void setRangeforChargeRate(float min, float max)
 }
 
 void printALLOk(char* BatteryParameter, int TestCaseCounter){
-	printf("For Testcase %d : Input %s within acceptable range\n",TestCaseCounter,BatteryParameter);
+	printf("Testcase %d : Input %s within acceptable range\n",TestCaseCounter,BatteryParameter);
 }
 
 void printOnDisplay(float BatteryParameterValue, char* BatteryParameter,char* Condition, float ParameterThreshold,int TestCaseCounter) {
-    printf("For Testcase %d : Input %s of %f is %s than the threshold value of  %f\n",TestCaseCounter,BatteryParameter,BatteryParameterValue,Condition,ParameterThreshold);
+    printf("Testcase %d : Input %s of %f is %s than the threshold value of  %f\n",TestCaseCounter,BatteryParameter,BatteryParameterValue,Condition,ParameterThreshold);
 }
 
 bool isBatteryParameter_LessThanLowRange(float currentInput, float minimumThreshold) {
