@@ -138,8 +138,8 @@ int main() {
   printf("hello %f",TestParameters1);
   TestBatteryIsOk(ALL_OK,TestParameters1);
 	
-//   float TestParameters2[]={50, 85, 0};
-//   TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
+  float TestParameters2[3]={50, 85, 0};
+  TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
 	
   setRangeValues("Temperature",10.0,30.0);
   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0);
