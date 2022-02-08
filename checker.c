@@ -124,6 +124,7 @@ int main() {
   setRangeValues("Charge Rate",0.0,0.8);
 	
   float TestParameters1[]={25, 70, 0.7};
+	printf(TestParameters1);
   TestBatteryIsOk(ALL_OK,TestParameters1);
 	
   float TestParameters2[]={50, 85, 0};
