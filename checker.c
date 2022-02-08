@@ -115,7 +115,7 @@ void TestBatteryIsOk(bool expectedOutput,float testData[]){
 //    assert(testBatteryStatus==expectedOutput);
 }
 
-void TestBatteryParameterWithinRange(char BatteryParametersName, bool expectedOutput, float testParameter){
+void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedOutput, float testParameter){
    int ParameterIndex = FetchParameterIndexFromName(BatteryParametersName);
 	printf("ParameterIndex %d",ParameterIndex);
    bool testParameterStatus = isBatteryParametersWithinRange(ParameterIndex,testParameter);
