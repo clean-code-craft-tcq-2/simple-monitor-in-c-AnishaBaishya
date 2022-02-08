@@ -2,6 +2,9 @@
 #include <assert.h>
 #include <stdbool.h>
 
+#define ALL_OK		0
+#define ALL_NOT_OK	1
+
 struct 
 {
   float lowRange;
@@ -91,15 +94,15 @@ int main() {
   setRangeforSOC(20.0,80.0);
   setRangeforChargeRate(0.0,0.8);
 	
-  TestBatteryIsOk(0,25, 70, 0.7);
-  TestBatteryIsOk(1,50, 85, 0);
+  TestBatteryIsOk(ALL_OK,25, 70, 0.7);
+  TestBatteryIsOk(ALL_NOT_OK,50, 85, 0);
 	
   setRangeforTemperature(10.0,30.0);
-  TestBatteryParameterWithinRange(1,40.0,Temperature.lowRange, Temperature.highRange);
+  TestBatteryParameterWithinRange(ALL_NOT_OK,40.0,Temperature.lowRange, Temperature.highRange);
 	
   setRangeforSOC(10.0,70.0);
-  TestBatteryParameterWithinRange(0,40.0,SOC.lowRange, SOC.highRange);
+  TestBatteryParameterWithinRange(ALL_OK,40.0,SOC.lowRange, SOC.highRange);
 	
   setRangeforChargeRate(0.0,0.6);
-  TestBatteryParameterWithinRange(1,0.8,ChargeRate.lowRange, ChargeRate.highRange);
+  TestBatteryParameterWithinRange(ALL_NOT_OK,0.8,ChargeRate.lowRange, ChargeRate.highRange);
 }
