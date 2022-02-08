@@ -80,9 +80,9 @@ void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC
 void TestBatteryParameterWithinRange(float testParameter,float lowRange, float highRange){
    bool testParameterStatus = isBatteryParameter_OutOfRange(testParameter,lowRange, highRange);
    if(testParameterStatus)
-	printOnDisplay("Battery Parameter under test within range!");
-   else
 	printOnDisplay("Battery Parameter under test not within range!");
+   else
+	printOnDisplay("Battery Parameter under test within range!");
 }
 
 int main() {
