@@ -102,9 +102,9 @@ bool BatteryIsOk(float currentTemperature, float currentSOC, float currentCharge
    return (TemperatureStatus || SOCStatus || ChargeRateStatus);  
 }
 
-void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC, float inputChargeRate){															  
-   bool testBatteryStatus = BatteryIsOk(inputTemperature, inputSOC, inputChargeRate); 
+void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC, float inputChargeRate){
    TestCaseCounter+=1;
+   bool testBatteryStatus = BatteryIsOk(inputTemperature, inputSOC, inputChargeRate); 
    if(!testBatteryStatus)
 	   printALLOk("parameters",TestCaseCounter);
    assert(testBatteryStatus==expectedOutput);
