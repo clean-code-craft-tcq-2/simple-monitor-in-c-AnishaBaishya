@@ -7,10 +7,16 @@
 #define MINIMUM_CHARGERATE    0
 #define MAXIMUM_CHARGERATE    0.8
 
+struct 
+{
+	float lowRange;
+	float highRange;
+}Temperature;
+
 void setRangeforTemperature(float low, float high)
 {
-	#define MINIMUM_TEMPERATURE low
-	#define MAXIMUM_TEMPERATURE high
+	Temperature.lowRange= low;
+	Temperature.highRange= high;
 }
 
 void printOnDisplay(char *stringToBePrinted) {
@@ -22,7 +28,7 @@ bool isBatteryParameter_OutOfRange(float currentInput, float minimumThreshold, f
 }
 
 bool isTemperatureWithinRange(float currentTemperature) {
-  int TemperatureStatus = isBatteryParameter_OutOfRange(currentTemperature, (float)MINIMUM_TEMPERATURE, (float)MAXIMUM_TEMPERATURE);
+  int TemperatureStatus = isBatteryParameter_OutOfRange(currentTemperature, Temperature.lowRange, Temperature.highRange);
   if(TemperatureStatus)
     printOnDisplay("Temperature out of range!");
   return TemperatureStatus;
