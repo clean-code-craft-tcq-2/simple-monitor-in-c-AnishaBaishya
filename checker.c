@@ -41,6 +41,10 @@ void setRangeforChargeRate(float low, float high)
   ChargeRate.highRange= high;
 }
 
+void printALLOk(char* BatteryParameter){
+	printf("Input %s within acceptable range\n",BatteryParameter)
+}
+
 void printOnDisplay(float BatteryParameterValue, char* BatteryParameter,char* Condition, float ParameterThreshold) {
     printf("Input %s of %f is %s than the threshold value of  %f\n",BatteryParameter,BatteryParameterValue,Condition,ParameterThreshold);
 }
@@ -94,6 +98,8 @@ bool BatteryIsOk(float currentTemperature, float currentSOC, float currentCharge
 
 void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC, float inputChargeRate){															  
    bool testBatteryStatus = BatteryIsOk(inputTemperature, inputSOC, inputChargeRate);  
+   if(!testBatteryStatus)
+	   printALLOk("parameters");
    assert(testBatteryStatus==expectedOutput);
 }
 
@@ -105,6 +111,8 @@ void TestBatteryParameterWithinRange(char* BatteryParameter, bool expectedOutput
   	testParameterStatus = isBatteryParameter_MoreThanHighRange(testParameter,highRange);
 	if(testParameterStatus) 
   		printOnDisplay(testParameter,BatteryParameter,"more",highRange);
+  	else
+		printALLOk(BatteryParameter);
   }
    assert(testParameterStatus==expectedOutput);
 }
