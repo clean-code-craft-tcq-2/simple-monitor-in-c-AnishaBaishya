@@ -85,7 +85,7 @@ bool isBatteryParametersWithinRange(BatteryParameterList BatteryParametersName,f
 	return ParameterCheck;		
 }
 
-int FetchParameterIndexFromName(char ParameterName){
+int FetchParameterIndexFromName(char* ParameterName){
    int counter;	
    int ParameterIndex = NoOfParameter;
    for (counter=0;counter<NoOfParameter;counter ++){ 
