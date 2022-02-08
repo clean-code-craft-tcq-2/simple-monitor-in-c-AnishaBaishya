@@ -16,7 +16,7 @@ typedef struct {
   BatteryParameterList parameter;
   float minimumThreshold;
   float maximumThreshold;
-  char parameterName[100];
+  char *parameterName[100];
 } BatteryParameterInfo;
 
 /* To keep track of Testcase number for ease of mapping testcase outcome to input parameters*/
@@ -43,6 +43,7 @@ void setRangeValues(char * ParameterName, float min, float max)
   		parameterInfo[ParameterIndex].minimumThreshold= min;
   		parameterInfo[ParameterIndex].maximumThreshold= max;
 	  }
+	  }
 }
 
 void printALLOk(char* BatteryParameter, int TestCaseCounter){
@@ -58,6 +59,7 @@ bool isBatteryParameter_LessThanLowRange(float currentInput, BatteryParameterLis
     if(currentInput < parameterInfo[BatteryParametersName].minimumThreshold){
 	    MinThresholdCheck=1;
 	    printOnDisplay(currentInput,parameterInfo[BatteryParametersName].parameterName,"less",parameterInfo[BatteryParametersName].minimumThreshold,TestCaseCounter);
+    }
     return MinThresholdCheck;
 }
 
@@ -66,8 +68,8 @@ bool isBatteryParameter_MoreThanHighRange(float currentInput, BatteryParameterLi
     if(currentInput > parameterInfo[BatteryParametersName].maximumThreshold){
 	    MaxThresholdCheck=1;
 	    printOnDisplay(currentInput,parameterInfo[BatteryParametersName].parameterName,"more",parameterInfo[BatteryParametersName].maximumThreshold,TestCaseCounter);
+    }
     return MaxThresholdCheck;
-}
 }
 
 bool isBatteryParametersWithinRange(BatteryParameterList BatteryParametersName,float currentInput){
@@ -84,6 +86,7 @@ int FetchParameterIndexFromName(char ParameterName){
    for (counter=0;counter<NoOfParameter;counter ++){ 
 	   if(parameterInfo[counter].parameterName == ParameterName)
 		   ParameterIndex= parameterInfo[counter].parameter;
+   }
    return ParameterIndex;	
 }
 		
@@ -91,7 +94,7 @@ bool BatteryIsOk(float testData[]) {
    bool BatteryStatus = 0;
    int counter;	
    for (counter=0;counter<NoOfParameter;counter ++){
-   BatteryStatus | = isBatteryParametersWithinRange(parameterInfo[counter].parameter, testData[counter]);
+   BatteryStatus|=isBatteryParametersWithinRange(parameterInfo[counter].parameter, testData[counter]);
    }
    return (BatteryStatus);  
 }
@@ -121,10 +124,10 @@ int main() {
   setRangeValues("Charge Rate",0.0,0.8);
 	
   float TestParameters1[]={25, 70, 0.7};
-  TestBatteryIsOk(ALL_OK,TestParameters);
+  TestBatteryIsOk(ALL_OK,TestParameters1);
 	
   float TestParameters2[]={50, 85, 0};
-  TestBatteryIsOk(ALL_NOT_OK,TestParameters);
+  TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
 	
   setRangeValues("Temperature",10.0,30.0);
   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0);
