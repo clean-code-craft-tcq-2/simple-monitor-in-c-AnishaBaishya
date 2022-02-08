@@ -5,6 +5,8 @@
 #define ALL_OK		0
 #define ALL_NOT_OK	1
 
+int TestCaseCounter = 0;
+
 struct 
 {
   float lowRange;
@@ -41,12 +43,12 @@ void setRangeforChargeRate(float low, float high)
   ChargeRate.highRange= high;
 }
 
-void printALLOk(char* BatteryParameter){
-	printf("Input %s within acceptable range\n",BatteryParameter);
+void printALLOk(char* BatteryParameter, int TestCaseCounter){
+	printf("For Testcase %d : Input %s within acceptable range\n",TestCaseCounter,BatteryParameter);
 }
 
-void printOnDisplay(float BatteryParameterValue, char* BatteryParameter,char* Condition, float ParameterThreshold) {
-    printf("Input %s of %f is %s than the threshold value of  %f\n",BatteryParameter,BatteryParameterValue,Condition,ParameterThreshold);
+void printOnDisplay(float BatteryParameterValue, char* BatteryParameter,char* Condition, float ParameterThreshold,int TestCaseCounter) {
+    printf("For Testcase %d : Input %s of %f is %s than the threshold value of  %f\n",TestCaseCounter,BatteryParameter,BatteryParameterValue,Condition,ParameterThreshold);
 }
 
 bool isBatteryParameter_LessThanLowRange(float currentInput, float minimumThreshold) {
@@ -60,11 +62,11 @@ bool isBatteryParameter_MoreThanHighRange(float currentInput, float maximumThres
 bool isTemperatureWithinRange(float currentTemperature) {
   bool TemperatureStatus = isBatteryParameter_LessThanLowRange(currentTemperature,Temperature.lowRange);
   if(TemperatureStatus) 
-  	printOnDisplay(currentTemperature,"Temperature","less",Temperature.lowRange);
+  	printOnDisplay(currentTemperature,"Temperature","less",Temperature.lowRange,TestCaseCounter);
   else{
   	TemperatureStatus = isBatteryParameter_MoreThanHighRange(currentTemperature,Temperature.highRange);
 	if(TemperatureStatus)
-  		printOnDisplay(currentTemperature,"Temperature","more",Temperature.highRange);
+  		printOnDisplay(currentTemperature,"Temperature","more",Temperature.highRange,TestCaseCounter);
       }
   return TemperatureStatus;
 }
@@ -72,11 +74,11 @@ bool isTemperatureWithinRange(float currentTemperature) {
 bool isSOCWithinRange(float currentSOC) {
   bool SOCStatus = isBatteryParameter_LessThanLowRange(currentSOC,SOC.lowRange);
   if(SOCStatus)
-  	printOnDisplay(currentSOC,"SOC","less",SOC.lowRange);
+  	printOnDisplay(currentSOC,"SOC","less",SOC.lowRange,TestCaseCounter);
   else{
   	SOCStatus = isBatteryParameter_MoreThanHighRange(currentSOC,SOC.highRange);
 	if(SOCStatus)
-  		printOnDisplay(currentSOC,"SOC","more",SOC.highRange);
+  		printOnDisplay(currentSOC,"SOC","more",SOC.highRange,TestCaseCounter);
 	}
   return SOCStatus;
 }
@@ -84,11 +86,11 @@ bool isSOCWithinRange(float currentSOC) {
 bool isChargeRateWithinRange(float currentChargeRate) {
   bool ChargeRateStatus = isBatteryParameter_LessThanLowRange(currentChargeRate,ChargeRate.lowRange);
   if(ChargeRateStatus)
-  	printOnDisplay(currentChargeRate,"ChargeRate","less",ChargeRate.lowRange);
+  	printOnDisplay(currentChargeRate,"ChargeRate","less",ChargeRate.lowRange,TestCaseCounter);
   else{
   	ChargeRateStatus = isBatteryParameter_MoreThanHighRange(currentChargeRate,ChargeRate.highRange);
 	if(ChargeRateStatus)
-  		printOnDisplay(currentChargeRate,"ChargeRate","more",ChargeRate.highRange);
+  		printOnDisplay(currentChargeRate,"ChargeRate","more",ChargeRate.highRange,TestCaseCounter);
 	}
   return ChargeRateStatus;
 }
@@ -101,22 +103,24 @@ bool BatteryIsOk(float currentTemperature, float currentSOC, float currentCharge
 }
 
 void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC, float inputChargeRate){															  
-   bool testBatteryStatus = BatteryIsOk(inputTemperature, inputSOC, inputChargeRate);  
+   bool testBatteryStatus = BatteryIsOk(inputTemperature, inputSOC, inputChargeRate); 
+   TestCaseCounter+=1;
    if(!testBatteryStatus)
-	   printALLOk("parameters");
+	   printALLOk("parameters",TestCaseCounter);
    assert(testBatteryStatus==expectedOutput);
 }
 
 void TestBatteryParameterWithinRange(char* BatteryParameter, bool expectedOutput, float testParameter,float lowRange, float highRange){
    bool testParameterStatus = isBatteryParameter_LessThanLowRange(testParameter,lowRange);
+   TestCaseCounter+=1;
    if(testParameterStatus)
-  	printOnDisplay(testParameter,BatteryParameter,"less",lowRange);
+  	printOnDisplay(testParameter,BatteryParameter,"less",lowRange,TestCaseCounter);
   else{
   	testParameterStatus = isBatteryParameter_MoreThanHighRange(testParameter,highRange);
 	if(testParameterStatus) 
-  		printOnDisplay(testParameter,BatteryParameter,"more",highRange);
+  		printOnDisplay(testParameter,BatteryParameter,"more",highRange,TestCaseCounter);
   	else
-		printALLOk(BatteryParameter);
+		printALLOk(BatteryParameter,TestCaseCounter);
   }
    assert(testParameterStatus==expectedOutput);
 }
