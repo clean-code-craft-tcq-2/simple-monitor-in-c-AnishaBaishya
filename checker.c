@@ -40,8 +40,8 @@ void setRangeValues(char * ParameterName, float min, float max)
   for (counter=0;counter<NoOfParameter;counter ++){ 
 	  if(parameterInfo[counter].parameterName == ParameterName){
 	  	ParameterIndex= parameterInfo[counter].parameter;
-  		parameterInfo[ParameterIndex].minimumThreshold= min;
-  		parameterInfo[ParameterIndex].maximumThreshold= max;
+  		parameterInfo[counter].minimumThreshold= min;
+  		parameterInfo[counter].maximumThreshold= max;
 	  }
 	  }
 }
