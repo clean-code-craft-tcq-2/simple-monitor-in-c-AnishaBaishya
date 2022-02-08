@@ -5,8 +5,6 @@
 #define ALL_OK		0
 #define ALL_NOT_OK	1
 
-char ParameterNames[3][100] = {"Temperature","SOC","Charge Rate"};
-
 typedef enum {
   TempParameter,
   SOCParameter,
@@ -27,10 +25,12 @@ int TestCaseCounter = 0;
 const BatteryParameterInfo parameterInfo [NoOfParameter] ;
 
 void PopulateParameterInfo(){
-  int counter;	
-  for (counter=0;counter<NoOfParameter;counter ++){ 
-	  parameterInfo[counter].parameter = BatteryParameterList[counter];
-	  parameterInfo[counter].parameterName = ParameterNames[counter][100];
+  	parameterInfo[0].parameter = TempParameter;
+	parameterInfo[0].parameterName = "Temperature";
+	parameterInfo[1].parameter = SOCParameter;
+	parameterInfo[1].parameterName = "SOC";
+	parameterInfo[2].parameter = ChargeRateParameter;
+	parameterInfo[2].parameterName = "Charge Rate";  
 }
 	
 void setRangeValues(char * ParameterName, float min, float max)
@@ -38,10 +38,11 @@ void setRangeValues(char * ParameterName, float min, float max)
   int counter;	
   int ParameterIndex = NoOfParameter;
   for (counter=0;counter<NoOfParameter;counter ++){ 
-	  if(parameterInfo[counter].parameterName == ParameterName)
-	  ParameterIndex= parameterInfo[counter].parameter;
-  parameterInfo[ParameterIndex].minimumThreshold= min;
-  parameterInfo[ParameterIndex].maximumThreshold= max;
+	  if(parameterInfo[counter].parameterName == ParameterName){
+	  	ParameterIndex= parameterInfo[counter].parameter;
+  		parameterInfo[ParameterIndex].minimumThreshold= min;
+  		parameterInfo[ParameterIndex].maximumThreshold= max;
+	  }
 }
 
 void printALLOk(char* BatteryParameter, int TestCaseCounter){
