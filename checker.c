@@ -72,6 +72,8 @@ bool BatteryIsOk(float currentTemperature, float currentSOC, float currentCharge
 
 void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC, float inputChargeRate){															  
    bool testBatteryStatus = BatteryIsOk(inputTemperature, inputSOC, inputChargeRate);
+   if(!testBatteryStatus)
+	printOnDisplay("All Battery parameters ok!");   
    assert(testBatteryStatus==expectedOutput);
 }
 
