@@ -5,6 +5,7 @@
 #define ALL_OK		0
 #define ALL_NOT_OK	1
 
+char ParameterNames[3]=["Temperature","SOC","Charge Rate"];
 typedef enum {
   TempParameter,
   SOCParameter,
@@ -22,22 +23,23 @@ typedef struct {
 /* To keep track of Testcase number for ease of mapping testcase outcome to input parameters*/
 int TestCaseCounter = 0;
 
-void setRangeforTemperature(float min, float max)
-{
-  Temperature.minimumThreshold= min;
-  Temperature.maximumThreshold= max;
+void PopulateParameterInfo(){
+  int counter;	
+  int ParameterIndex = NoOfParameter;
+  for (counter=0;counter<NoOfParameter;counter ++){ 
+	  BatteryParameterInfo[ParameterIndex].parameter = BatteryParameterList[ParameterIndex];
+	  BatteryParameterInfo[ParameterIndex].parameterName = ParameterNames[ParameterIndex];
 }
-
-void setRangeforSOC(float min, float max)
+	
+void setRangeValues(char * ParameterName, float min, float max)
 {
-  SOC.minimumThreshold= min;
-  SOC.maximumThreshold= max;
-}
-
-void setRangeforChargeRate(float min, float max)
-{
-  ChargeRate.minimumThreshold= min;
-  ChargeRate.maximumThreshold= max;
+  int counter;	
+  int ParameterIndex = NoOfParameter;
+  for (counter=0;counter<NoOfParameter;counter ++){ 
+	  if(BatteryParameterInfo[counter].parameterName == ParameterName)
+	  ParameterIndex= BatteryParameterInfo[counter].parameter;
+  BatteryParameterInfo[ParameterIndex].minimumThreshold= min;
+  BatteryParameterInfo[ParameterIndex].maximumThreshold= max;
 }
 
 void printALLOk(char* BatteryParameter, int TestCaseCounter){
@@ -112,9 +114,11 @@ void TestBatteryParameterWithinRange(char BatteryParametersName, bool expectedOu
 int main() {
   float TestParameters[3];
 	
-  setRangeforTemperature(0.0,45.0);
-  setRangeforSOC(20.0,80.0);
-  setRangeforChargeRate(0.0,0.8);
+  PopulateParameterInfo();
+	  
+  setRangeValues("Temperature",0.0,45.0);
+  setRangeValues("SOC",20.0,80.0);
+  setRangeValues("Charge Rate",0.0,0.8);
 	
   TestParameters[]={25, 70, 0.7};
   TestBatteryIsOk(ALL_OK,TestParameters);
@@ -122,15 +126,15 @@ int main() {
   TestParameters[]={50, 85, 0};
   TestBatteryIsOk(ALL_NOT_OK,TestParameters);
 	
-  setRangeforTemperature(10.0,30.0);
+  setRangeValues("Temperature",10.0,30.0);
   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0);
 	
-  setRangeforSOC(10.0,70.0);
+  setRangeValues("SOC",10.0,70.0);
   TestBatteryParameterWithinRange("SOC",ALL_OK,40.0);
 	
-  setRangeforChargeRate(0.0,0.6);
+  setRangeValues("Charge Rate",0.0,0.6);
   TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.8);
 	
-  setRangeforTemperature(40.0,60.0);
+  setRangeValues("Temperature",40.0,60.0);
   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,30.0);
 }
