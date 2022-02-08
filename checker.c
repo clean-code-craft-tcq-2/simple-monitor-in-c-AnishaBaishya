@@ -89,8 +89,9 @@ int FetchParameterIndexFromName(char ParameterName){
    int counter;	
    int ParameterIndex = NoOfParameter;
    for (counter=0;counter<NoOfParameter;counter ++){ 
-	   if(!(strcmp(parameterInfo[counter].parameterName,ParameterName)))
+	   if(!(strcmp(parameterInfo[counter].parameterName,ParameterName))){
 		   ParameterIndex= parameterInfo[counter].parameter;
+	   }
    }
    return ParameterIndex;	
 }
