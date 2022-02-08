@@ -133,4 +133,7 @@ int main() {
 	
   setRangeforChargeRate(0.0,0.6);
   TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.8,ChargeRate.lowRange, ChargeRate.highRange);
+	
+  setRangeforTemperature(40.0,60.0);
+  TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,30.0,Temperature.lowRange, Temperature.highRange);
 }
