@@ -11,6 +11,7 @@ int isTemperatureWithinRange(float currentTemperature) {
   if(currentTemperature < MINIMUM_TEMPERATURE || currentTemperature > MAXIMUM_TEMPERATURE) {
     printf("Temperature out of range!\n");
     return 0;
+  }
   else
     return 1
 }
@@ -19,6 +20,7 @@ int isSOCWithinRange(float currentSOC) {
     if(currentSOC < MINIMUM_SOC || currentSOC > MAXIMUM_SOC) {
       printf("State of Charge out of range!\n");
       return 0;
+    }
     else
       return 1;
 }
@@ -27,6 +29,7 @@ bool isChargeRateWithinRange(float currentChargeRate) {
     if(currentChargeRate > MAXIMUM_CHARGERATE) {
       printf("Charge Rate out of range!\n");
       return 0;
+    }
     else
       return 1;
 }
