@@ -30,7 +30,7 @@ int isSOCWithinRange(float currentSOC) {
 int isChargeRateWithinRange(float currentChargeRate) {
   int ChargeRateStatus = isBatteryParameter_OutOfRange(currentChargeRate, (float)MINIMUM_CHARGERATE, (float)MAXIMUM_CHARGERATE);
   if(ChargeRateStatus)
-        printMeOnDisplay("Charge Rate out of range!\n");
+        printf("Charge Rate out of range!\n");
   return ChargeRateStatus;
 }
 int BatteryIsOk(float currentTemperature, float currentSOC, float currentChargeRate) {
