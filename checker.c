@@ -35,7 +35,7 @@ bool isChargeRateWithinRange(float currentChargeRate) {
   return ChargeRateStatus;
 }
 bool BatteryIsOk(float currentTemperature, float currentSOC, float currentChargeRate) {
-    return (isTemperatureWithinRange(currentTemperature) & isSOCWithinRange(currentSOC) & isChargeRateWithinRange(currentChargeRate));  
+    return (isTemperatureWithinRange(currentTemperature) || isSOCWithinRange(currentSOC) || isChargeRateWithinRange(currentChargeRate));  
 }
 
 bool TestBatteryIsOk(float inputTemperature, float inputSOC, float inputChargeRate){
