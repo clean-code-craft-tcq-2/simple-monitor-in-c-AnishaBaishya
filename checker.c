@@ -54,33 +54,33 @@ bool isBatteryParameter_MoreThanHighRange(float currentInput, float maximumThres
 }
 
 bool isTemperatureWithinRange(float currentTemperature) {
-  bool TemperatureStatus = isBatteryParameter_LessThanLowRange(currentTemperature,Temperature.lowRange)
+  bool TemperatureStatus = isBatteryParameter_LessThanLowRange(currentTemperature,Temperature.lowRange);
   if(TemperatureStatus) {
   	printOnDisplay(currentTemperature,"Temperature","less",Temperature.lowRange);
   else
-  	TemperatureStatus = isBatteryParameter_MoreThanHighRange(currentTemperature,Temperature.highRange)
+  	TemperatureStatus = isBatteryParameter_MoreThanHighRange(currentTemperature,Temperature.highRange);
 	if(TemperatureStatus) {
   		printOnDisplay(currentTemperature,"Temperature","more",Temperature.highRange);
   return TemperatureStatus;
 }
 
 bool isSOCWithinRange(float currentSOC) {
-  bool SOCStatus = isBatteryParameter_LessThanLowRange(currentSOC,SOC.lowRange)
+  bool SOCStatus = isBatteryParameter_LessThanLowRange(currentSOC,SOC.lowRange);
   if(SOCStatus) {
   	printOnDisplay(currentSOC,"SOC","less",SOC.lowRange);
   else
-  	SOCStatus = isBatteryParameter_MoreThanHighRange(currentSOC,SOC.highRange)
+  	SOCStatus = isBatteryParameter_MoreThanHighRange(currentSOC,SOC.highRange);
 	if(SOCStatus) {
   		printOnDisplay(currentSOC,"SOC","more",SOC.highRange);
   return SOCStatus;
 }
 
 bool isChargeRateWithinRange(float currentChargeRate) {
-  bool ChargeRateStatus = isBatteryParameter_LessThanLowRange(currentChargeRate,ChargeRate.lowRange)
+  bool ChargeRateStatus = isBatteryParameter_LessThanLowRange(currentChargeRate,ChargeRate.lowRange);
   if(ChargeRateStatus) {
   	printOnDisplay(currentChargeRate,"ChargeRate","less",ChargeRate.lowRange);
   else
-  	ChargeRateStatus = isBatteryParameter_MoreThanHighRange(currentChargeRate,ChargeRate.highRange)
+  	ChargeRateStatus = isBatteryParameter_MoreThanHighRange(currentChargeRate,ChargeRate.highRange);
 	if(ChargeRateStatus) {
   		printOnDisplay(currentChargeRate,"ChargeRate","more",ChargeRate.highRange);
   return ChargeRateStatus;
@@ -101,7 +101,7 @@ void TestBatteryParameterWithinRange(char* BatteryParameter, bool expectedOutput
    if(testParameterStatus) {
   	printOnDisplay(testParameter,BatteryParameter,"less",lowRange);
   else
-  	testParameterStatus = isBatteryParameter_MoreThanHighRange(testParameter,highRange)
+  	testParameterStatus = isBatteryParameter_MoreThanHighRange(testParameter,highRange);
 	if(testParameterStatus) {
   		printOnDisplay(testParameter,BatteryParameter,"more",highRange);
    assert(testParameterStatus==expectedOutput);
