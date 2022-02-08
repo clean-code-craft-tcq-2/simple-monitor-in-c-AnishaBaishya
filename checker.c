@@ -118,8 +118,8 @@ void TestBatteryIsOk(bool expectedOutput,float testData[]){
 void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedOutput, float testParameter){
    int ParameterIndex = FetchParameterIndexFromName(BatteryParametersName);
 	printf("ParameterIndex %d",ParameterIndex);
-   bool testParameterStatus = isBatteryParametersWithinRange(ParameterIndex,testParameter);
    TestCaseCounter+=1;
+   bool testParameterStatus = isBatteryParametersWithinRange(ParameterIndex,testParameter);
    if(!testParameterStatus)
 	printALLOk(BatteryParametersName,TestCaseCounter);
 //    assert(testParameterStatus==expectedOutput);
