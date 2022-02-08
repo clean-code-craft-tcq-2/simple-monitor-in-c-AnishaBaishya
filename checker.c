@@ -40,7 +40,7 @@ bool BatteryIsOk(float currentTemperature, float currentSOC, float currentCharge
 
 void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC, float inputChargeRate){
    bool testBatteryStatus = BatteryIsOk(inputTemperature, inputSOC, inputChargeRate);
-   assert(testBatteryStatus,expectedOutput);
+   assert(testBatteryStatus==expectedOutput);
 }
 
 int main() {
