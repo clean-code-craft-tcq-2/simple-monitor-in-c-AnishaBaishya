@@ -104,9 +104,9 @@ bool BatteryIsOk(float *apTestParameters[],bool(*apBatteryChecks)[](float)) {
    return (BatteryStatus);  
 }
 
-void TestBatteryIsOk(bool expectedOutput, float *apTestParameters[],bool(*apBatteryChecks)[](float)){
+void TestBatteryIsOk(bool expectedOutput,bool(*apBatteryChecks)[](*apTestParameters[])){
    TestCaseCounter+=1;
-   bool testBatteryStatus = BatteryIsOk(apTestParameters[],apBatteryChecks[]); 
+   bool testBatteryStatus = BatteryIsOk(apBatteryChecks[](apTestParameters[])); 
    if(!testBatteryStatus)
 	   printALLOk("parameters",TestCaseCounter);
    assert(testBatteryStatus==expectedOutput);
