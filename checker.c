@@ -33,12 +33,12 @@ void PopulateParameterInfo(){
 	strcpy(parameterInfo[2].parameterName, "Charge Rate");  
 }
 	
-void setRangeValues(char ParameterName, float min, float max)
+void setRangeValues(char* ParameterName, float min, float max)
 {
   int counter;	
   int ParameterIndex = NoOfParameter;
   for (counter=0;counter<NoOfParameter;counter ++){ 
-	  if(parameterInfo[counter].parameterName == ParameterName){
+	  if(strcmp(parameterInfo[counter].parameterName,ParameterName)){
 		printf("I am here %d\n",counter);
 	  	ParameterIndex= parameterInfo[counter].parameter;
   		parameterInfo[counter].minimumThreshold= min;
