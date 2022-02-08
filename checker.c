@@ -39,7 +39,6 @@ void setRangeValues(char* ParameterName, float min, float max)
   int ParameterIndex = NoOfParameter;
   for (counter=0;counter<NoOfParameter;counter ++){ 
 	  if(!(strcmp(parameterInfo[counter].parameterName,ParameterName))){
-		printf("I am here %d\n",counter);
 	  	ParameterIndex= parameterInfo[counter].parameter;
   		parameterInfo[counter].minimumThreshold= min;
   		parameterInfo[counter].maximumThreshold= max;
@@ -61,7 +60,6 @@ bool isBatteryParameter_LessThanLowRange(float currentInput, BatteryParameterLis
 	    MinThresholdCheck=1;
 	    printOnDisplay(currentInput,parameterInfo[BatteryParametersName].parameterName,"less",parameterInfo[BatteryParametersName].minimumThreshold,TestCaseCounter);
     }
-	printf("MinThresholdCheck %d\n",MinThresholdCheck);
     return MinThresholdCheck;
 }
 
@@ -71,17 +69,14 @@ bool isBatteryParameter_MoreThanHighRange(float currentInput, BatteryParameterLi
 	    MaxThresholdCheck=1;
 	    printOnDisplay(currentInput,parameterInfo[BatteryParametersName].parameterName,"more",parameterInfo[BatteryParametersName].maximumThreshold,TestCaseCounter);
     }
-	printf("MaxThresholdCheck %d\n",MaxThresholdCheck);
     return MaxThresholdCheck;
 }
 
 bool isBatteryParametersWithinRange(BatteryParameterList BatteryParametersName,float currentInput){
 	bool ParameterCheck;
 	ParameterCheck= isBatteryParameter_LessThanLowRange(currentInput,BatteryParametersName);
-	printf("ParameterCheckLow %d\n",ParameterCheck);
 	if(!ParameterCheck)
 		ParameterCheck= isBatteryParameter_MoreThanHighRange(currentInput,BatteryParametersName);
-		printf("ParameterCheckHigh %d\n",ParameterCheck);
 	return ParameterCheck;		
 }
 
@@ -101,7 +96,6 @@ bool BatteryIsOk(float testData[]) {
    int counter;	
    for (counter=0;counter<NoOfParameter;counter ++){
    BatteryStatus|=isBatteryParametersWithinRange(parameterInfo[counter].parameter, testData[counter]);
-	   printf("BatteryStatus %d\n",BatteryStatus);
    }
    return (BatteryStatus);  
 }
@@ -109,7 +103,6 @@ bool BatteryIsOk(float testData[]) {
 void TestBatteryIsOk(bool expectedOutput,float testData[]){
    TestCaseCounter+=1;
    bool testBatteryStatus = BatteryIsOk(testData); 
-	printf("testBatteryStatus %d\n",testBatteryStatus);
    if(!testBatteryStatus)
 	   printALLOk("parameters",TestCaseCounter);
    assert(testBatteryStatus==expectedOutput);
@@ -117,7 +110,6 @@ void TestBatteryIsOk(bool expectedOutput,float testData[]){
 
 void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedOutput, float testParameter){
    int ParameterIndex = FetchParameterIndexFromName(BatteryParametersName);
-	printf("ParameterIndex %d",ParameterIndex);
    TestCaseCounter+=1;
    bool testParameterStatus = isBatteryParametersWithinRange(ParameterIndex,testParameter);
    if(!testParameterStatus)
@@ -132,12 +124,7 @@ int main() {
   setRangeValues("SOC",20.0,80.0);
   setRangeValues("Charge Rate",0.0,0.8);
 	
-//   printf("Temp %f %f %s\n",parameterInfo[0].minimumThreshold,parameterInfo[0].maximumThreshold,parameterInfo[0].parameterName);
-// 	printf("SOC %f %f %s\n",parameterInfo[1].minimumThreshold,parameterInfo[1].maximumThreshold,parameterInfo[1].parameterName);
-// 	printf("Charge %f %f %s\n",parameterInfo[2].minimumThreshold,parameterInfo[2].maximumThreshold,parameterInfo[2].parameterName);
-	
   float TestParameters1[3]={25, 70, 0.7};
-  printf("hello %f",TestParameters1);
   TestBatteryIsOk(ALL_OK,TestParameters1);
 	
   float TestParameters2[3]={50, 85, 0};
@@ -147,7 +134,6 @@ int main() {
   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0);
 	
   setRangeValues("SOC",10.0,70.0);
-	printf("SOC %f %f %s\n",parameterInfo[1].minimumThreshold,parameterInfo[1].maximumThreshold,parameterInfo[1].parameterName);
   TestBatteryParameterWithinRange("SOC",ALL_OK,40.0);
 	
   setRangeValues("Charge Rate",0.0,0.6);
