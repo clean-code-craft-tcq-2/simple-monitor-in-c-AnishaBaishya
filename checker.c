@@ -5,26 +5,22 @@
 #define ALL_OK		0
 #define ALL_NOT_OK	1
 
+typedef enum {
+  TempParameter,
+  SOCParameter,
+  ChargeRateParameter,
+  NoOfParameter
+} BatteryParameterList;
+
+typedef struct {
+  BatteryParameterList parameter;
+  float minimumThreshold;
+  float maximumThreshold;
+  char parameterName[100];
+} BatteryParameterInfo;
+
 /* To keep track of Testcase number for ease of mapping testcase outcome to input parameters*/
 int TestCaseCounter = 0;
-
-struct 
-{
-  float minimumThreshold;
-  float maximumThreshold;
-}Temperature;
-
-struct 
-{
-  float minimumThreshold;
-  float maximumThreshold;
-}SOC;
-
-struct 
-{
-  float minimumThreshold;
-  float maximumThreshold;
-}ChargeRate;
 
 void setRangeforTemperature(float min, float max)
 {
@@ -52,108 +48,89 @@ void printOnDisplay(float BatteryParameterValue, char* BatteryParameter,char* Co
     printf("Testcase %d : Input %s of %f is %s than the threshold value of  %f\n",TestCaseCounter,BatteryParameter,BatteryParameterValue,Condition,ParameterThreshold);
 }
 
-bool isBatteryParameter_LessThanLowRange(float currentInput, float minimumThreshold) {
-    return (currentInput < minimumThreshold);
+bool isBatteryParameter_LessThanLowRange(float currentInput, BatteryParameterList BatteryParametersName) {
+    bool MinThresholdCheck = 0;
+    if(currentInput < BatteryParameterInfo[BatteryParametersName].minimumThreshold){
+	    MinThresholdCheck=1;
+	    printOnDisplay(currentInput,BatteryParameterInfo[BatteryParametersName].parameterName,"less",BatteryParameterInfo[BatteryParametersName].minimumThreshold,TestCaseCounter);
+    return MinThresholdCheck;
 }
 
-bool isBatteryParameter_MoreThanHighRange(float currentInput, float maximumThreshold) {
-    return (currentInput > maximumThreshold);
+bool isBatteryParameter_MoreThanHighRange(float currentInput, BatteryParameterList BatteryParametersName) {
+    bool MaxThresholdCheck = 0;
+    if(currentInput > BatteryParameterInfo[BatteryParametersName].maximumThreshold){
+	    MaxThresholdCheck=1;
+	    printOnDisplay(currentInput,BatteryParameterInfo[BatteryParametersName].parameterName,"more",BatteryParameterInfo[BatteryParametersName].maximumThreshold,TestCaseCounter);
+    return MaxThresholdCheck;
+}
 }
 
-bool isTemperatureWithinRange(float currentTemperature) {
-  bool TemperatureStatus = isBatteryParameter_LessThanLowRange(currentTemperature,Temperature.minimumThreshold);
-  if(TemperatureStatus) 
-  	printOnDisplay(currentTemperature,"Temperature","less",Temperature.minimumThreshold,TestCaseCounter);
-  else{
-  	TemperatureStatus = isBatteryParameter_MoreThanHighRange(currentTemperature,Temperature.maximumThreshold);
-	if(TemperatureStatus)
-  		printOnDisplay(currentTemperature,"Temperature","more",Temperature.maximumThreshold,TestCaseCounter);
-      }
-  return TemperatureStatus;
+bool isBatteryParametersWithinRange(BatteryParameterList BatteryParametersName,float currentInput){
+	bool ParameterCheck;
+	ParameterCheck= isBatteryParameter_LessThanLowRange(currentInput,BatteryParametersName);
+	if(!ParameterCheck)
+		ParameterCheck= isBatteryParameter_MoreThanHighRange(currentInput,BatteryParametersName);
+	return ParameterCheck;		
 }
 
-bool isSOCWithinRange(float currentSOC) {
-  bool SOCStatus = isBatteryParameter_LessThanLowRange(currentSOC,SOC.minimumThreshold);
-  if(SOCStatus)
-  	printOnDisplay(currentSOC,"SOC","less",SOC.minimumThreshold,TestCaseCounter);
-  else{
-  	SOCStatus = isBatteryParameter_MoreThanHighRange(currentSOC,SOC.maximumThreshold);
-	if(SOCStatus)
-  		printOnDisplay(currentSOC,"SOC","more",SOC.maximumThreshold,TestCaseCounter);
-	}
-  return SOCStatus;
+int FetchParameterIndexFromName(char * ParameterName){
+   int counter;	
+   int ParameterIndex = NoOfParameter;
+   for (counter=0;counter<NoOfParameter;counter ++){ 
+	   if(BatteryParameterInfo[counter].parameterName == ParameterName)
+		   ParameterIndex= BatteryParameterInfo[counter].parameter;
+   return ParameterIndex;	
 }
-
-bool isChargeRateWithinRange(float currentChargeRate) {
-  bool ChargeRateStatus = isBatteryParameter_LessThanLowRange(currentChargeRate,ChargeRate.minimumThreshold);
-  if(ChargeRateStatus)
-  	printOnDisplay(currentChargeRate,"ChargeRate","less",ChargeRate.minimumThreshold,TestCaseCounter);
-  else{
-  	ChargeRateStatus = isBatteryParameter_MoreThanHighRange(currentChargeRate,ChargeRate.maximumThreshold);
-	if(ChargeRateStatus)
-  		printOnDisplay(currentChargeRate,"ChargeRate","more",ChargeRate.maximumThreshold,TestCaseCounter);
-	}
-  return ChargeRateStatus;
-}
-bool BatteryIsOk(bool(*apBatteryChecks)(*apTestParameters)) {
+		
+bool BatteryIsOk(float testData[]) {
    bool BatteryStatus = 0;
    int counter;	
-   for (counter=0;counter<sizeof(apBatteryChecks);counter ++){
-   BatteryStatus || = *apBatteryChecks[counter](apTestParameters[counter]);
+   for (counter=0;counter<NoOfParameter;counter ++){
+   BatteryStatus || = isBatteryParametersWithinRange(BatteryParameterInfo[counter].parameterName, testData[counter]);
    }
    return (BatteryStatus);  
 }
 
-void TestBatteryIsOk(bool expectedOutput,bool(*apBatteryChecks)(*apTestParameters)){
+void TestBatteryIsOk(bool expectedOutput,float testData[]){
    TestCaseCounter+=1;
-   bool testBatteryStatus = BatteryIsOk(apBatteryChecks(apTestParameters)); 
+   bool testBatteryStatus = BatteryIsOk(testData[]); 
    if(!testBatteryStatus)
 	   printALLOk("parameters",TestCaseCounter);
    assert(testBatteryStatus==expectedOutput);
 }
 
-void TestBatteryParameterWithinRange(char* BatteryParameter, bool expectedOutput, float testParameter,float minimumThreshold, float maximumThreshold){
-   bool testParameterStatus = isBatteryParameter_LessThanLowRange(testParameter,minimumThreshold);
+void TestBatteryParameterWithinRange(char BatteryParametersName, bool expectedOutput, float testParameter,){
+   int ParameterIndex = FetchParameterIndexFromName(BatteryParametersName);
+   bool testParameterStatus = isBatteryParametersWithinRange(ParameterIndex,testParameter);
    TestCaseCounter+=1;
-   if(testParameterStatus)
-  	printOnDisplay(testParameter,BatteryParameter,"less",minimumThreshold,TestCaseCounter);
-  else{
-  	testParameterStatus = isBatteryParameter_MoreThanHighRange(testParameter,maximumThreshold);
-	if(testParameterStatus) 
-  		printOnDisplay(testParameter,BatteryParameter,"more",maximumThreshold,TestCaseCounter);
-  	else
-		printALLOk(BatteryParameter,TestCaseCounter);
+   if(!testParameterStatus)
+	printALLOk(BatteryParameterInfo[BatteryParametersName].parameterName,TestCaseCounter);
   }
    assert(testParameterStatus==expectedOutput);
 }
 
 int main() {
   float TestParameters[3];
-  bool (BatteryChecks[3])(float TestParameters[]);
-	
-  BatteryChecks[0] = isTemperatureWithinRange;
-  BatteryChecks[1] = isSOCWithinRange;
-  BatteryChecks[2] = isChargeRateWithinRange;
 	
   setRangeforTemperature(0.0,45.0);
   setRangeforSOC(20.0,80.0);
   setRangeforChargeRate(0.0,0.8);
 	
   TestParameters[]={25, 70, 0.7};
-  TestBatteryIsOk(ALL_OK,BatteryChecks(TestParameters));
+  TestBatteryIsOk(ALL_OK,TestParameters);
 	
-//   TestParameters[3]={50, 85, 0};
-//   TestBatteryIsOk(ALL_NOT_OK,&TestParameters[],&BatteryChecks);
+  TestParameters[]={50, 85, 0};
+  TestBatteryIsOk(ALL_NOT_OK,TestParameters);
 	
   setRangeforTemperature(10.0,30.0);
-  TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0,Temperature.minimumThreshold, Temperature.maximumThreshold);
+  TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0);
 	
   setRangeforSOC(10.0,70.0);
-  TestBatteryParameterWithinRange("SOC",ALL_OK,40.0,SOC.minimumThreshold, SOC.maximumThreshold);
+  TestBatteryParameterWithinRange("SOC",ALL_OK,40.0);
 	
   setRangeforChargeRate(0.0,0.6);
-  TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.8,ChargeRate.minimumThreshold, ChargeRate.maximumThreshold);
+  TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.8);
 	
   setRangeforTemperature(40.0,60.0);
-  TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,30.0,Temperature.minimumThreshold, Temperature.maximumThreshold);
+  TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,30.0);
 }
