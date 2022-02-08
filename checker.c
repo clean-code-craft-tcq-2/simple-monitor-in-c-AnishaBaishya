@@ -95,17 +95,18 @@ bool isChargeRateWithinRange(float currentChargeRate) {
 	}
   return ChargeRateStatus;
 }
-bool BatteryIsOk(float currentTemperature, float currentSOC, float currentChargeRate,bool (*fpIsTemperatureWithinRange)(float),bool (*fpIsSOCWithinRange)(float),bool (*fpIsChargeRateWithinRange)(float)) {
-   bool TemperatureStatus, SOCStatus, ChargeRateStatus;
-   TemperatureStatus = fpIsTemperatureWithinRange(currentTemperature);
-   SOCStatus= fpIsSOCWithinRange(currentSOC);
-   ChargeRateStatus=fpIsChargeRateWithinRange(currentChargeRate);
-   return (TemperatureStatus || SOCStatus || ChargeRateStatus);  
+bool BatteryIsOk(float *apTestParameters[],bool(*apBatteryChecks)[](float)) {
+   bool BatteryStatus = 0;
+   int counter;	
+   for (counter=0;counter<sizeof(apBatteryChecks);counter ++){
+   BatteryStatus || = *apBatteryChecks[counter](apTestParameters[counter]);
+   }
+   return (BatteryStatus);  
 }
 
-void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC, float inputChargeRate,bool (*fpIsTemperatureWithinRange)(float),bool (*fpIsSOCWithinRange)(float),bool (*fpIsChargeRateWithinRange)(float)){
+void TestBatteryIsOk(bool expectedOutput, float *apTestParameters[],bool(*apBatteryChecks)[](float)){
    TestCaseCounter+=1;
-   bool testBatteryStatus = BatteryIsOk(inputTemperature, inputSOC, inputChargeRate,fpIsTemperatureWithinRange,fpIsSOCWithinRange,fpIsChargeRateWithinRange); 
+   bool testBatteryStatus = BatteryIsOk(apTestParameters[],apBatteryChecks[]); 
    if(!testBatteryStatus)
 	   printALLOk("parameters",TestCaseCounter);
    assert(testBatteryStatus==expectedOutput);
@@ -127,12 +128,21 @@ void TestBatteryParameterWithinRange(char* BatteryParameter, bool expectedOutput
 }
 
 int main() {
+  bool (*BatteryChecks[3])(float testParameter);
+	
+  BatteryChecks[0] = isTemperatureWithinRange;
+  BatteryChecks[1] = isSOCWithinRange;
+  BatteryChecks[2] = isChargeRateWithinRange;
+	
   setRangeforTemperature(0.0,45.0);
   setRangeforSOC(20.0,80.0);
   setRangeforChargeRate(0.0,0.8);
 	
-  TestBatteryIsOk(ALL_OK,25, 70, 0.7,&isTemperatureWithinRange, &isSOCWithinRange, &isChargeRateWithinRange);
-  TestBatteryIsOk(ALL_NOT_OK,50, 85, 0,&isTemperatureWithinRange, &isSOCWithinRange, &isChargeRateWithinRange);
+  float TestParameters[3]={25, 70, 0.7};
+  TestBatteryIsOk(ALL_OK,&TestParameters[],&BatteryChecks[]);
+	
+  float TestParameters[3]={50, 85, 0};
+  TestBatteryIsOk(ALL_NOT_OK,&TestParameters[],&BatteryChecks);
 	
   setRangeforTemperature(10.0,30.0);
   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0,Temperature.minimumThreshold, Temperature.maximumThreshold);
