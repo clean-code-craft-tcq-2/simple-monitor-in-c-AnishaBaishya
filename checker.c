@@ -9,6 +9,9 @@
 #define MINIMUM_CHARGERATE    0
 #define MAXIMUM_CHARGERATE    0.8
 
+void printOnDisplay(char *stringToBePrinted) {
+    printf("%s \n", stringToBePrinted);
+}
 
 bool isBatteryParameter_OutOfRange(float currentInput, float minimumThreshold, float maximumThreshold) {
     return ((currentInput < minimumThreshold) || (currentInput > maximumThreshold));
@@ -17,21 +20,21 @@ bool isBatteryParameter_OutOfRange(float currentInput, float minimumThreshold, f
 bool isTemperatureWithinRange(float currentTemperature) {
   int TemperatureStatus = isBatteryParameter_OutOfRange(currentTemperature, (float)MINIMUM_TEMPERATURE, (float)MAXIMUM_TEMPERATURE);
   if(TemperatureStatus)
-    printf("Temperature out of range!\n");
+    printOnDisplay("Temperature out of range!");
   return TemperatureStatus;
 }
 
 bool isSOCWithinRange(float currentSOC) {
   int SOCStatus = isBatteryParameter_OutOfRange(currentSOC, (float)MINIMUM_SOC, (float)MAXIMUM_SOC);
   if(SOCStatus)
-      printf("State of Charge out of range!\n");
+      printOnDisplay("State of Charge out of range!");
   return SOCStatus;
 }
 
 bool isChargeRateWithinRange(float currentChargeRate) {
   int ChargeRateStatus = isBatteryParameter_OutOfRange(currentChargeRate, (float)MINIMUM_CHARGERATE, (float)MAXIMUM_CHARGERATE);
   if(ChargeRateStatus)
-        printf("Charge Rate out of range!\n");
+        printOnDisplay("Charge Rate out of range!");
   return ChargeRateStatus;
 }
 bool BatteryIsOk(float currentTemperature, float currentSOC, float currentChargeRate) {
