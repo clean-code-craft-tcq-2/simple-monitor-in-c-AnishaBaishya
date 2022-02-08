@@ -123,7 +123,7 @@ int main() {
   setRangeValues("SOC",20.0,80.0);
   setRangeValues("Charge Rate",0.0,0.8);
 	
-  float TestParameters1[]={25, 70, 0.7};
+  float TestParameters1[3]={25, 70, 0.7};
   printf("hello %f",TestParameters1);
   TestBatteryIsOk(ALL_OK,TestParameters1);
 	
