@@ -22,7 +22,7 @@ typedef struct {
 /* To keep track of Testcase number for ease of mapping testcase outcome to input parameters*/
 int TestCaseCounter = 0;
 
-const BatteryParameterInfo parameterInfo [NoOfParameter] ;
+BatteryParameterInfo parameterInfo [NoOfParameter] ;
 
 void PopulateParameterInfo(){
   	parameterInfo[0].parameter = TempParameter;
@@ -78,7 +78,7 @@ bool isBatteryParametersWithinRange(BatteryParameterList BatteryParametersName,f
 	return ParameterCheck;		
 }
 
-int FetchParameterIndexFromName(char * ParameterName){
+int FetchParameterIndexFromName(char ParameterName){
    int counter;	
    int ParameterIndex = NoOfParameter;
    for (counter=0;counter<NoOfParameter;counter ++){ 
