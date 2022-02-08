@@ -2,21 +2,40 @@
 #include <assert.h>
 #include <stdbool.h>
 
-#define MINIMUM_SOC    20.0
-#define MAXIMUM_SOC    80.0
-#define MINIMUM_CHARGERATE    0
-#define MAXIMUM_CHARGERATE    0.8
+struct 
+{
+  float lowRange;
+  float highRange;
+}Temperature;
 
 struct 
 {
-	float lowRange;
-	float highRange;
-}Temperature;
+  float lowRange;
+  float highRange;
+}SOC;
+
+struct 
+{
+  float lowRange;
+  float highRange;
+}ChargeRate;
 
 void setRangeforTemperature(float low, float high)
 {
-	Temperature.lowRange= low;
-	Temperature.highRange= high;
+  Temperature.lowRange= low;
+  Temperature.highRange= high;
+}
+
+void setRangeforSOC(float low, float high)
+{
+  SOC.lowRange= low;
+  SOC.highRange= high;
+}
+
+void setRangeforChargeRate(float low, float high)
+{
+  ChargeRate.lowRange= low;
+  ChargeRate.highRange= high;
 }
 
 void printOnDisplay(char *stringToBePrinted) {
@@ -35,14 +54,14 @@ bool isTemperatureWithinRange(float currentTemperature) {
 }
 
 bool isSOCWithinRange(float currentSOC) {
-  int SOCStatus = isBatteryParameter_OutOfRange(currentSOC, (float)MINIMUM_SOC, (float)MAXIMUM_SOC);
+  int SOCStatus = isBatteryParameter_OutOfRange(currentSOC, SOC.lowRange, SOC.highRange);
   if(SOCStatus)
       printOnDisplay("State of Charge out of range!");
   return SOCStatus;
 }
 
 bool isChargeRateWithinRange(float currentChargeRate) {
-  int ChargeRateStatus = isBatteryParameter_OutOfRange(currentChargeRate, (float)MINIMUM_CHARGERATE, (float)MAXIMUM_CHARGERATE);
+  int ChargeRateStatus = isBatteryParameter_OutOfRange(currentChargeRate, ChargeRate.lowRange, ChargeRate.highRange);
   if(ChargeRateStatus)
         printOnDisplay("Charge Rate out of range!");
   return ChargeRateStatus;
@@ -57,7 +76,10 @@ void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC
 }
 
 int main() {
-    setRangeforTemperature(0.0,45.0);
+  setRangeforTemperature(0.0,45.0);
+  setRangeforSOC(20.0,80.0);
+  setRangeforChargeRate(0.0,0.8);
+	
   TestBatteryIsOk(0,25, 70, 0.7);
   TestBatteryIsOk(1,50, 85, 0);
 }
