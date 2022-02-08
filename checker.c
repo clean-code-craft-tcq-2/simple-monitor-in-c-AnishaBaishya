@@ -121,7 +121,7 @@ void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedO
    bool testParameterStatus = isBatteryParametersWithinRange(ParameterIndex,testParameter);
    TestCaseCounter+=1;
    if(!testParameterStatus)
-	printALLOk(parameterInfo[BatteryParametersName].parameterName,TestCaseCounter);
+	printALLOk(BatteryParametersName,TestCaseCounter);
 //    assert(testParameterStatus==expectedOutput);
 }
 
