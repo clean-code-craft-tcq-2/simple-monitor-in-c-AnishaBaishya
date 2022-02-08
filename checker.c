@@ -38,11 +38,12 @@ bool BatteryIsOk(float currentTemperature, float currentSOC, float currentCharge
     return (isTemperatureWithinRange(currentTemperature) || isSOCWithinRange(currentSOC) || isChargeRateWithinRange(currentChargeRate));  
 }
 
-bool TestBatteryIsOk(float inputTemperature, float inputSOC, float inputChargeRate){
-  return BatteryIsOk(inputTemperature, inputSOC, inputChargeRate);
+void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC, float inputChargeRate){
+   bool testBatteryStatus = BatteryIsOk(inputTemperature, inputSOC, inputChargeRate);
+   assert(testBatteryStatus,expectedOutput);
 }
 
 int main() {
-  assert(TestBatteryIsOk(25, 70, 0.7));
-  assert(!TestBatteryIsOk(50, 85, 0));
+  TestBatteryIsOk(0,25, 70, 0.7);
+  TestBatteryIsOk(1,50, 85, 0);
 }
