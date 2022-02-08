@@ -24,13 +24,12 @@ typedef struct {
 /* To keep track of Testcase number for ease of mapping testcase outcome to input parameters*/
 int TestCaseCounter = 0;
 
-const BatteryParameterInfo parameterInfo [MaxParameter] ;
+const BatteryParameterInfo parameterInfo [NoOfParameter] ;
 
 void PopulateParameterInfo(){
   int counter;	
-  int ParameterIndex = NoOfParameter;
   for (counter=0;counter<NoOfParameter;counter ++){ 
-	  parameterInfo[counter].parameter = BatteryParameterList[counter][100];
+	  parameterInfo[counter].parameter = BatteryParameterList[counter];
 	  parameterInfo[counter].parameterName = ParameterNames[counter][100];
 }
 	
@@ -91,42 +90,39 @@ bool BatteryIsOk(float testData[]) {
    bool BatteryStatus = 0;
    int counter;	
    for (counter=0;counter<NoOfParameter;counter ++){
-   BatteryStatus || = isBatteryParametersWithinRange(parameterInfo[counter].parameterName, testData[counter]);
+   BatteryStatus | = isBatteryParametersWithinRange(parameterInfo[counter].parameter, testData[counter]);
    }
    return (BatteryStatus);  
 }
 
 void TestBatteryIsOk(bool expectedOutput,float testData[]){
    TestCaseCounter+=1;
-   bool testBatteryStatus = BatteryIsOk(testData[]); 
+   bool testBatteryStatus = BatteryIsOk(testData); 
    if(!testBatteryStatus)
 	   printALLOk("parameters",TestCaseCounter);
    assert(testBatteryStatus==expectedOutput);
 }
 
-void TestBatteryParameterWithinRange(char BatteryParametersName, bool expectedOutput, float testParameter,){
+void TestBatteryParameterWithinRange(char BatteryParametersName, bool expectedOutput, float testParameter){
    int ParameterIndex = FetchParameterIndexFromName(BatteryParametersName);
    bool testParameterStatus = isBatteryParametersWithinRange(ParameterIndex,testParameter);
    TestCaseCounter+=1;
    if(!testParameterStatus)
 	printALLOk(parameterInfo[BatteryParametersName].parameterName,TestCaseCounter);
-  }
    assert(testParameterStatus==expectedOutput);
 }
 
 int main() {
-  float TestParameters[3];
-	
   PopulateParameterInfo();
 	  
   setRangeValues("Temperature",0.0,45.0);
   setRangeValues("SOC",20.0,80.0);
   setRangeValues("Charge Rate",0.0,0.8);
 	
-  TestParameters[]={25, 70, 0.7};
+  float TestParameters1[]={25, 70, 0.7};
   TestBatteryIsOk(ALL_OK,TestParameters);
 	
-  TestParameters[]={50, 85, 0};
+  float TestParameters2[]={50, 85, 0};
   TestBatteryIsOk(ALL_NOT_OK,TestParameters);
 	
   setRangeValues("Temperature",10.0,30.0);
