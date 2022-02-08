@@ -128,7 +128,7 @@ void TestBatteryParameterWithinRange(char* BatteryParameter, bool expectedOutput
 }
 
 int main() {
-  bool (*BatteryChecks[3])(float testParameter);
+  bool (BatteryChecks[3])(float testParameter[]);
 	
   BatteryChecks[0] = isTemperatureWithinRange;
   BatteryChecks[1] = isSOCWithinRange;
