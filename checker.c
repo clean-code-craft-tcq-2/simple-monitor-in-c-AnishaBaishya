@@ -5,8 +5,7 @@
 #define ALL_OK		0
 #define ALL_NOT_OK	1
 
-char ParameterNames[3];
-ParameterNames[]={"Temperature","SOC","Charge Rate"};
+char ParameterNames[3][100] = {"Temperature","SOC","Charge Rate"};
 
 typedef enum {
   TempParameter,
