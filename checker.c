@@ -33,7 +33,7 @@ void PopulateParameterInfo(){
 	strcpy(parameterInfo[2].parameterName, "Charge Rate");  
 }
 	
-void setRangeValues(char * ParameterName, float min, float max)
+void setRangeValues(char ParameterName, float min, float max)
 {
   int counter;	
   int ParameterIndex = NoOfParameter;
