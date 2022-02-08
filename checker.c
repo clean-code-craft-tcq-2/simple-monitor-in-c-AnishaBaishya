@@ -24,12 +24,14 @@ typedef struct {
 /* To keep track of Testcase number for ease of mapping testcase outcome to input parameters*/
 int TestCaseCounter = 0;
 
+const BatteryParameterInfo parameterInfo [MaxParameter] ;
+
 void PopulateParameterInfo(){
   int counter;	
   int ParameterIndex = NoOfParameter;
   for (counter=0;counter<NoOfParameter;counter ++){ 
-	  BatteryParameterInfo[ParameterIndex].parameter = BatteryParameterList[ParameterIndex];
-	  BatteryParameterInfo[ParameterIndex].parameterName = ParameterNames[ParameterIndex];
+	  parameterInfo[counter].parameter = BatteryParameterList[counter][100];
+	  parameterInfo[counter].parameterName = ParameterNames[counter][100];
 }
 	
 void setRangeValues(char * ParameterName, float min, float max)
@@ -37,10 +39,10 @@ void setRangeValues(char * ParameterName, float min, float max)
   int counter;	
   int ParameterIndex = NoOfParameter;
   for (counter=0;counter<NoOfParameter;counter ++){ 
-	  if(BatteryParameterInfo[counter].parameterName == ParameterName)
-	  ParameterIndex= BatteryParameterInfo[counter].parameter;
-  BatteryParameterInfo[ParameterIndex].minimumThreshold= min;
-  BatteryParameterInfo[ParameterIndex].maximumThreshold= max;
+	  if(parameterInfo[counter].parameterName == ParameterName)
+	  ParameterIndex= parameterInfo[counter].parameter;
+  parameterInfo[ParameterIndex].minimumThreshold= min;
+  parameterInfo[ParameterIndex].maximumThreshold= max;
 }
 
 void printALLOk(char* BatteryParameter, int TestCaseCounter){
@@ -53,17 +55,17 @@ void printOnDisplay(float BatteryParameterValue, char* BatteryParameter,char* Co
 
 bool isBatteryParameter_LessThanLowRange(float currentInput, BatteryParameterList BatteryParametersName) {
     bool MinThresholdCheck = 0;
-    if(currentInput < BatteryParameterInfo[BatteryParametersName].minimumThreshold){
+    if(currentInput < parameterInfo[BatteryParametersName].minimumThreshold){
 	    MinThresholdCheck=1;
-	    printOnDisplay(currentInput,BatteryParameterInfo[BatteryParametersName].parameterName,"less",BatteryParameterInfo[BatteryParametersName].minimumThreshold,TestCaseCounter);
+	    printOnDisplay(currentInput,parameterInfo[BatteryParametersName].parameterName,"less",parameterInfo[BatteryParametersName].minimumThreshold,TestCaseCounter);
     return MinThresholdCheck;
 }
 
 bool isBatteryParameter_MoreThanHighRange(float currentInput, BatteryParameterList BatteryParametersName) {
     bool MaxThresholdCheck = 0;
-    if(currentInput > BatteryParameterInfo[BatteryParametersName].maximumThreshold){
+    if(currentInput > parameterInfo[BatteryParametersName].maximumThreshold){
 	    MaxThresholdCheck=1;
-	    printOnDisplay(currentInput,BatteryParameterInfo[BatteryParametersName].parameterName,"more",BatteryParameterInfo[BatteryParametersName].maximumThreshold,TestCaseCounter);
+	    printOnDisplay(currentInput,parameterInfo[BatteryParametersName].parameterName,"more",parameterInfo[BatteryParametersName].maximumThreshold,TestCaseCounter);
     return MaxThresholdCheck;
 }
 }
@@ -80,8 +82,8 @@ int FetchParameterIndexFromName(char * ParameterName){
    int counter;	
    int ParameterIndex = NoOfParameter;
    for (counter=0;counter<NoOfParameter;counter ++){ 
-	   if(BatteryParameterInfo[counter].parameterName == ParameterName)
-		   ParameterIndex= BatteryParameterInfo[counter].parameter;
+	   if(parameterInfo[counter].parameterName == ParameterName)
+		   ParameterIndex= parameterInfo[counter].parameter;
    return ParameterIndex;	
 }
 		
@@ -89,7 +91,7 @@ bool BatteryIsOk(float testData[]) {
    bool BatteryStatus = 0;
    int counter;	
    for (counter=0;counter<NoOfParameter;counter ++){
-   BatteryStatus || = isBatteryParametersWithinRange(BatteryParameterInfo[counter].parameterName, testData[counter]);
+   BatteryStatus || = isBatteryParametersWithinRange(parameterInfo[counter].parameterName, testData[counter]);
    }
    return (BatteryStatus);  
 }
@@ -107,7 +109,7 @@ void TestBatteryParameterWithinRange(char BatteryParametersName, bool expectedOu
    bool testParameterStatus = isBatteryParametersWithinRange(ParameterIndex,testParameter);
    TestCaseCounter+=1;
    if(!testParameterStatus)
-	printALLOk(BatteryParameterInfo[BatteryParametersName].parameterName,TestCaseCounter);
+	printALLOk(parameterInfo[BatteryParametersName].parameterName,TestCaseCounter);
   }
    assert(testParameterStatus==expectedOutput);
 }
