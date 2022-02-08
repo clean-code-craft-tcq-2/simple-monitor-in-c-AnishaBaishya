@@ -42,7 +42,7 @@ void setRangeforChargeRate(float low, float high)
 }
 
 void printALLOk(char* BatteryParameter){
-	printf("Input %s within acceptable range\n",BatteryParameter)
+	printf("Input %s within acceptable range\n",BatteryParameter);
 }
 
 void printOnDisplay(float BatteryParameterValue, char* BatteryParameter,char* Condition, float ParameterThreshold) {
