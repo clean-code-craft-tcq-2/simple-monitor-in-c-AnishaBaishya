@@ -19,6 +19,9 @@ typedef struct {
   char parameterName[100];
 } BatteryParameterInfo;
 
+int StringCompare(char * String1,char * String2){
+	return (!(strcmp(String1,String2)));
+}
 /* To keep track of Testcase number for ease of mapping testcase outcome to input parameters*/
 int TestCaseCounter = 0;
 
@@ -36,10 +39,8 @@ void PopulateParameterInfo(){
 void setRangeValues(char* ParameterName, float min, float max)
 {
   int counter;	
-  int ParameterIndex = NoOfParameter;
   for (counter=0;counter<NoOfParameter;counter ++){ 
-	  if(!(strcmp(parameterInfo[counter].parameterName,ParameterName))){
-	  	ParameterIndex= parameterInfo[counter].parameter;
+	  if(StringCompare(parameterInfo[counter].parameterName,ParameterName)){
   		parameterInfo[counter].minimumThreshold= min;
   		parameterInfo[counter].maximumThreshold= max;
 	  }
@@ -84,7 +85,7 @@ int FetchParameterIndexFromName(char* ParameterName){
    int counter;	
    int ParameterIndex = NoOfParameter;
    for (counter=0;counter<NoOfParameter;counter ++){ 
-	   if(!(strcmp(parameterInfo[counter].parameterName,ParameterName))){
+	   if(StringCompare(parameterInfo[counter].parameterName,ParameterName)){
 		   ParameterIndex= parameterInfo[counter].parameter;
 	   }
    }
