@@ -95,7 +95,7 @@ bool isChargeRateWithinRange(float currentChargeRate) {
 	}
   return ChargeRateStatus;
 }
-bool BatteryIsOk(float *apTestParameters[],bool(*apBatteryChecks)[](float)) {
+bool BatteryIsOk(bool(*apBatteryChecks)(*apTestParameters)) {
    bool BatteryStatus = 0;
    int counter;	
    for (counter=0;counter<sizeof(apBatteryChecks);counter ++){
@@ -106,7 +106,7 @@ bool BatteryIsOk(float *apTestParameters[],bool(*apBatteryChecks)[](float)) {
 
 void TestBatteryIsOk(bool expectedOutput,bool(*apBatteryChecks)(*apTestParameters)){
    TestCaseCounter+=1;
-   bool testBatteryStatus = BatteryIsOk(apBatteryChecks[](apTestParameters[])); 
+   bool testBatteryStatus = BatteryIsOk(apBatteryChecks(apTestParameters)); 
    if(!testBatteryStatus)
 	   printALLOk("parameters",TestCaseCounter);
    assert(testBatteryStatus==expectedOutput);
@@ -128,7 +128,8 @@ void TestBatteryParameterWithinRange(char* BatteryParameter, bool expectedOutput
 }
 
 int main() {
-  bool (BatteryChecks[3])(float testParameter[]);
+  float TestParameters[3];
+  bool (BatteryChecks[3])(float TestParameters[]);
 	
   BatteryChecks[0] = isTemperatureWithinRange;
   BatteryChecks[1] = isSOCWithinRange;
@@ -138,10 +139,10 @@ int main() {
   setRangeforSOC(20.0,80.0);
   setRangeforChargeRate(0.0,0.8);
 	
-  float TestParameters[3]={25, 70, 0.7};
+  TestParameters[3]={25, 70, 0.7};
   TestBatteryIsOk(ALL_OK,BatteryChecks(TestParameters));
 	
-  float TestParameters[3]={50, 85, 0};
+  TestParameters[3]={50, 85, 0};
   TestBatteryIsOk(ALL_NOT_OK,&TestParameters[],&BatteryChecks);
 	
   setRangeforTemperature(10.0,30.0);
