@@ -39,7 +39,7 @@ void setRangeValues(char * ParameterName, float min, float max)
   int ParameterIndex = NoOfParameter;
   for (counter=0;counter<NoOfParameter;counter ++){ 
 	  if(parameterInfo[counter].parameterName == ParameterName){
-		  printf("I am here %d\n',counter);
+		printf("I am here %d\n",counter);
 	  	ParameterIndex= parameterInfo[counter].parameter;
   		parameterInfo[counter].minimumThreshold= min;
   		parameterInfo[counter].maximumThreshold= max;
