@@ -70,9 +70,17 @@ bool BatteryIsOk(float currentTemperature, float currentSOC, float currentCharge
     return (isTemperatureWithinRange(currentTemperature) || isSOCWithinRange(currentSOC) || isChargeRateWithinRange(currentChargeRate));  
 }
 
-void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC, float inputChargeRate){
+void TestBatteryIsOk(bool expectedOutput, float inputTemperature, float inputSOC, float inputChargeRate){															  
    bool testBatteryStatus = BatteryIsOk(inputTemperature, inputSOC, inputChargeRate);
    assert(testBatteryStatus==expectedOutput);
+}
+
+void TestBatteryParameterWithinRange(float testParameter,float lowRange, float highRange){
+   bool testParameterStatus = isBatteryParameter_OutOfRange(testParameter,lowRange, highRange);
+   if(testParameterStatus)
+	printOnDisplay("Battery Parameter within range!");
+   else
+	printOnDisplay("Battery Parameter not within range!");
 }
 
 int main() {
@@ -82,4 +90,10 @@ int main() {
 	
   TestBatteryIsOk(0,25, 70, 0.7);
   TestBatteryIsOk(1,50, 85, 0);
+	
+  setRangeforTemperature(10.0,30.0);
+  TestBatteryParameterWithinRange(40.0,Temperature.lowRange, Temperature.highRange);
+	
+  setRangeforSOC(10.0,70.0);
+  TestBatteryParameterWithinRange(40.0,SOC.lowRange, SOC.highRange);
 }
