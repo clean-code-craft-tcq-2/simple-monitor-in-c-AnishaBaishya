@@ -104,7 +104,7 @@ bool BatteryIsOk(float *apTestParameters[],bool(*apBatteryChecks)[](float)) {
    return (BatteryStatus);  
 }
 
-void TestBatteryIsOk(bool expectedOutput,bool(*apBatteryChecks)[](*apTestParameters[])){
+void TestBatteryIsOk(bool expectedOutput,bool(*apBatteryChecks)(*apTestParameters)){
    TestCaseCounter+=1;
    bool testBatteryStatus = BatteryIsOk(apBatteryChecks[](apTestParameters[])); 
    if(!testBatteryStatus)
@@ -139,7 +139,7 @@ int main() {
   setRangeforChargeRate(0.0,0.8);
 	
   float TestParameters[3]={25, 70, 0.7};
-  TestBatteryIsOk(ALL_OK,&BatteryChecks[](&TestParameters));
+  TestBatteryIsOk(ALL_OK,BatteryChecks(TestParameters));
 	
   float TestParameters[3]={50, 85, 0};
   TestBatteryIsOk(ALL_NOT_OK,&TestParameters[],&BatteryChecks);
