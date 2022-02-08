@@ -112,7 +112,7 @@ void TestBatteryIsOk(bool expectedOutput,float testData[]){
 	printf("testBatteryStatus %d\n",testBatteryStatus);
    if(!testBatteryStatus)
 	   printALLOk("parameters",TestCaseCounter);
-//    assert(testBatteryStatus==expectedOutput);
+   assert(testBatteryStatus==expectedOutput);
 }
 
 void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedOutput, float testParameter){
@@ -122,7 +122,7 @@ void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedO
    bool testParameterStatus = isBatteryParametersWithinRange(ParameterIndex,testParameter);
    if(!testParameterStatus)
 	printALLOk(BatteryParametersName,TestCaseCounter);
-//    assert(testParameterStatus==expectedOutput);
+   assert(testParameterStatus==expectedOutput);
 }
 
 int main() {
