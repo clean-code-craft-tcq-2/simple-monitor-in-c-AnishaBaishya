@@ -96,7 +96,7 @@ bool BatteryIsOk(float currentTemperature, float currentSOC, float currentCharge
    bool TemperatureStatus, SOCStatus, ChargeRateStatus;
    TemperatureStatus = isTemperatureWithinRange(currentTemperature);
    SOCStatus= isSOCWithinRange(currentSOC);
-   ChargeRateStatus=isChargeRateWithinRange(currentChargeRate)
+   ChargeRateStatus=isChargeRateWithinRange(currentChargeRate);
    return (TemperatureStatus || SOCStatus || ChargeRateStatus);  
 }
 
