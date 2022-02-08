@@ -129,6 +129,10 @@ int main() {
   setRangeValues("SOC",20.0,80.0);
   setRangeValues("Charge Rate",0.0,0.8);
 	
+  printf("Temp %f %f\n",parameterInfo[0].minimumThreshold,parameterInfo[0].maximumThreshold);
+	printf("SOC %f %f\n",parameterInfo[1].minimumThreshold,parameterInfo[1].maximumThreshold);
+	printf("Charge %f %f\n",parameterInfo[2].minimumThreshold,parameterInfo[2].maximumThreshold);
+	
   float TestParameters1[3]={25, 70, 0.7};
   printf("hello %f",TestParameters1);
   TestBatteryIsOk(ALL_OK,TestParameters1);
