@@ -11,16 +11,16 @@ typedef enum {
   SOCParameter,
   ChargeRateParameter,
   NoOfParameter
-} BatteryParameterList;
+} EV_BatteryParameterTypesForBMS;
 
 typedef struct {
-  BatteryParameterList parameter;
+  EV_BatteryParameterTypesForBMS parameter;
   float minimumThreshold;
   float maximumThreshold;
   char parameterName[100];
 } BatteryParameterInfo;
 
-int StringCompare(char * String1,char * String2){
+int StringsAreEqual(char * String1,char * String2){
 	return (!(strcmp(String1,String2)));
 }
 /* To keep track of Testcase number for ease of mapping testcase outcome to input parameters*/
@@ -41,7 +41,7 @@ void setRangeValues(char* ParameterName, float min, float max)
 {
   int counter;	
   for (counter=0;counter<NoOfParameter;counter ++){ 
-	  if(StringCompare(parameterInfo[counter].parameterName,ParameterName)){
+	  if(StringsAreEqual(parameterInfo[counter].parameterName,ParameterName)){
   		parameterInfo[counter].minimumThreshold= min;
   		parameterInfo[counter].maximumThreshold= max;
 	  }
@@ -56,7 +56,7 @@ void printOnDisplay(float BatteryParameterValue, char* BatteryParameter,char* Co
     printf("Testcase %d : Input %s of %f is %s than the threshold value of  %f\n",TestCaseCounter,BatteryParameter,BatteryParameterValue,Condition,ParameterThreshold);
 }
 
-bool isBatteryParameter_LessThanLowRange(float currentInput, BatteryParameterList BatteryParametersName) {
+bool isBatteryParameter_LessThanLowRange(float currentInput, EV_BatteryParameterTypesForBMS BatteryParametersName) {
     bool MinThresholdCheck = 0;
     if(currentInput < parameterInfo[BatteryParametersName].minimumThreshold){
 	    MinThresholdCheck=1;
@@ -65,7 +65,7 @@ bool isBatteryParameter_LessThanLowRange(float currentInput, BatteryParameterLis
     return MinThresholdCheck;
 }
 
-bool isBatteryParameter_MoreThanHighRange(float currentInput, BatteryParameterList BatteryParametersName) {
+bool isBatteryParameter_MoreThanHighRange(float currentInput, EV_BatteryParameterTypesForBMS BatteryParametersName) {
     bool MaxThresholdCheck = 0;
     if(currentInput > parameterInfo[BatteryParametersName].maximumThreshold){
 	    MaxThresholdCheck=1;
@@ -74,7 +74,7 @@ bool isBatteryParameter_MoreThanHighRange(float currentInput, BatteryParameterLi
     return MaxThresholdCheck;
 }
 
-bool isBatteryParametersWithinRange(BatteryParameterList BatteryParametersName,float currentInput){
+bool isBatteryParametersWithinRange(EV_BatteryParameterTypesForBMS BatteryParametersName,float currentInput){
 	bool ParameterCheck;
 	ParameterCheck= isBatteryParameter_LessThanLowRange(currentInput,BatteryParametersName);
 	if(!ParameterCheck)
@@ -86,7 +86,7 @@ int FetchParameterIndexFromName(char* ParameterName){
    int counter;	
    int ParameterIndex = NoOfParameter;
    for (counter=0;counter<NoOfParameter;counter ++){ 
-	   if(StringCompare(parameterInfo[counter].parameterName,ParameterName)){
+	   if(StringsAreEqual(parameterInfo[counter].parameterName,ParameterName)){
 		   ParameterIndex= parameterInfo[counter].parameter;
 	   }
    }
