@@ -152,15 +152,18 @@ int FetchParameterIndexFromName(char* ParameterName){
    }
    return ParameterIndex;	
 }
-		
+void CheckBatteryParameter(EV_BatteryParameterTypesForBMS BatteryParametersName,float testBatteryParameter, bool* BatteryErrorStatus, bool* BatteryWarningStatus){
+	*BatteryErrorStatus|=isBatteryParametersWithinNormalRange(BatteryParametersName, testBatteryParameter);
+	printf("Error %d \n" ,*BatteryErrorStatus);
+	if(*BatteryErrorStatus == 0){
+		*BatteryWarningStatus|=isBatteryParametersWithinToleranceLimit(BatteryParametersName, testBatteryParameter); 
+		printf("Warning %d \n" ,*BatteryWarningStatus);}
+}
+
 void BatteryIsOk(float testData[], bool* BatteryErrorStatus, bool* BatteryWarningStatus ) {
    int counter;	
    for (counter=0;counter<NoOfParameter;counter ++){
-	   *BatteryErrorStatus|=isBatteryParametersWithinNormalRange(parameterInfo[counter].parameter, testData[counter]);
-	   printf("Error %d \n" ,*BatteryErrorStatus);
-	   if(*BatteryErrorStatus == 0){
-		*BatteryWarningStatus|=isBatteryParametersWithinToleranceLimit(parameterInfo[counter].parameter, testData[counter]); 
-	   	printf("Warning %d \n" ,*BatteryWarningStatus);}
+	   CheckBatteryParameter(parameterInfo[counter].parameter,testData[counter],BatteryErrorStatus,BatteryWarningStatus);
    } 
 }
 
