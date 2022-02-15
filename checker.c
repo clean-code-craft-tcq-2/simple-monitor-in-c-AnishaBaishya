@@ -55,7 +55,7 @@ DifferentDisplayMessage DisplayMessageBasedOnLanguageChosen;
 void DisplayMessageBasedOnSupportedLanguage(){
 	if(MESSAGE_LANGUAGE == ENGLISH)	
 	{
-		DisplayMessageBasedOnLanguageChosen.messageAllOk[50] = " within acceptable normal range";
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageAllOk ," within acceptable normal range");
 		DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0][50] = "CAUTION !";
 		DisplayMessageBasedOnLanguageChosen.messageLimitBreached[1][50] = " is less than threshold value.";
 		DisplayMessageBasedOnLanguageChosen.messageLimitBreached[2][50] = " is more than threshold value";
@@ -218,6 +218,8 @@ void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedO
 int main() {
   DisplayMessageBasedOnSupportedLanguage();
   PopulateParameterInfo();
+	
+printf("here %s \n",DisplayMessageBasedOnLanguageChosen.messageAllOk);
 	  
   setRangeValues("Temperature",0.0,45.0);
   setRangeValues("SOC",20.0,80.0);
