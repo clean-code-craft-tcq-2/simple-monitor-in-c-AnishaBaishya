@@ -3,6 +3,12 @@
 #include <stdbool.h>
 #include <string.h>
 
+typedef enum {
+  ENGLISH,
+  GERMAN
+} SupportedLanguages;
+
+#define MESSAGE_LANGUAGE		ENGLISH
 #define ALL_OK				0
 #define ALL_NOT_OK			1
 
@@ -39,6 +45,15 @@ int TestCaseCounter = 0;
 
 BatteryParameterInfo parameterInfo [NoOfParameter] ;
 
+void DisplayMessageBasedOnSupportedLanguage(){
+	if(MESSAGE_LANGUAGE == ENGLISH)
+	{
+		messageAllOk[50] = " within acceptable normal range";
+		messageLimitBreached[100][3]= {"CAUTION !"," is less than threshold value."," is more than threshold value"};
+		messageToleranceLimitApproached[100][3] ={"WARNING !"," is approaching the lower threshold value"," is approaching the higher threshold value"};
+	}
+}
+
 void PopulateParameterInfo(){
   	parameterInfo[0].parameter = TempParameter;
 	strcpy(parameterInfo[0].parameterName,"Temperature");
@@ -69,7 +84,7 @@ void setToleranceLimitValues(EV_BatteryParameterTypesForBMS BatteryParametersNam
 }
 
 void printALLOk(char* BatteryParameter, int TestCaseCounter){
-	printf("Testcase %d : Input %s within acceptable normal range\n",TestCaseCounter,BatteryParameter);
+	printf("%d : %s %s\n",TestCaseCounter,BatteryParameter,messageAllOk);
 }
 
 void printOnDisplayLimitBreached(char* BatteryParameter,char* Condition,int TestCaseCounter) {
