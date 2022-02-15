@@ -8,7 +8,7 @@ typedef enum {
   GERMAN
 } SupportedLanguages;
 
-#define MESSAGE_LANGUAGE		ENGLISH
+#define MESSAGE_LANGUAGE		GERMAN
 #define ALL_OK				0
 #define ALL_NOT_OK			1
 
@@ -62,6 +62,16 @@ void DisplayMessageBasedOnSupportedLanguage(){
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[0], "WARNING ! ");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[1]," is approaching the lower threshold value.");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[2], " is approaching the higher threshold value.");
+	}
+	if(MESSAGE_LANGUAGE == GERMAN)	
+	{
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageAllOk ,"Testparameter innerhalb eines akzeptablen Normalbereichs");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0],"VORSICHT ! ");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[1], " kleiner als der Schwellenwert ist.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[2]," über dem Schwellenwert liegt.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[0], "WARNUNG ! ");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[1]," nähert sich dem unteren Schwellenwert.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[2], " nähert sich dem höheren Schwellenwert.");
 	}
 }
 
