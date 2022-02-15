@@ -38,9 +38,9 @@ typedef struct {
 }BatteryParameterToleranceValues;
 
 typedef struct{
-	float Temperature,
-	char TempUnit,
-	float SOC,
+	float Temperature;
+	char TempUnit[2];
+	float SOC;
 	float ChargeRate
 }Struct_BatteryTestData;
 
