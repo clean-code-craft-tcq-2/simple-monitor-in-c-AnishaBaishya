@@ -37,6 +37,13 @@ typedef struct {
 	float HighValueOfWarningTolerance;
 }BatteryParameterToleranceValues;
 
+typedef struct{
+	float Temperature,
+	char TempUnit,
+	float SOC,
+	float ChargeRate
+}Struct_BatteryTestData;
+
 int StringsAreEqual(char * String1,char * String2){
 	return (!(strcmp(String1,String2)));
 }
@@ -197,19 +204,34 @@ void CheckBatteryParameter(EV_BatteryParameterTypesForBMS BatteryParametersName,
 		*BatteryWarningStatus|=isBatteryParametersWithinToleranceLimit(BatteryParametersName, testBatteryParameter); 
 }
 
-void BatteryIsOk(float testData[], bool* BatteryErrorStatus, bool* BatteryWarningStatus ) {
+void ConvertTempToCelcius(float* TemperatureValue){
+	printf("Fahrenheit %f\n",*TemperatureValue);
+	*TemperatureValue = ((*TemperatureValue - 32)*5)/9;
+	printf("Celcius %f\n",*TemperatureValue);
+}
+void ConvertTestDataToArray(float* testData[],Struct_BatteryTestData* BatteryTestData){
+	if(BatteryTestData.TempUnit == 'f' || BatteryTestData.TempUnit == 'F')
+		ConvertTempToCelcius(&BatteryTestData.Temperature);
+	testData[0] = BatteryTestData.Temperature;
+	testData[1] = BatteryTestData.SOC;
+	testData[2] = BatteryTestData.ChargeRate;
+}
+
+void BatteryIsOk(Struct_BatteryTestData* testData, bool* BatteryErrorStatus, bool* BatteryWarningStatus ) {
    int counter;	
+   float testDataArray[3];
+   ConvertTestDataToArray(&testDataArray[],testData)
    for (counter=0;counter<NoOfParameter;counter ++){
-	   CheckBatteryParameter(parameterInfo[counter].parameter,testData[counter],BatteryErrorStatus,BatteryWarningStatus);
+	   CheckBatteryParameter(parameterInfo[counter].parameter,testDataArray[counter],BatteryErrorStatus,BatteryWarningStatus);
    } 
 }
 
-void TestBatteryIsOk(bool expectedOutput,float testData[]){
+void TestBatteryIsOk(bool expectedOutput,Struct_BatteryTestData testData){
    TestCaseCounter+=1;
    bool testBatteryStatus;
    bool BatteryErrorStatus = 0;
    bool BatteryWarningStatus = 0;
-   BatteryIsOk(testData,&BatteryErrorStatus,&BatteryWarningStatus); 
+   BatteryIsOk(&testData,&BatteryErrorStatus,&BatteryWarningStatus); 
    if(BatteryErrorStatus == 1 || BatteryWarningStatus ==1)
 	   testBatteryStatus = ALL_NOT_OK;
    else{
@@ -243,22 +265,26 @@ int main() {
   setRangeValues(BatteryParameterName.ParameterName[0],0.0,45.0);
   setRangeValues(BatteryParameterName.ParameterName[1],20.0,80.0);
   setRangeValues(BatteryParameterName.ParameterName[2],0.0,0.8);
+
+Struct_BatteryTestData TestParameters[5]={ 
+    { 25, 'c' ,70, 0.7},
+    { 50, 'C', 85, 0},
+    { 40, 'c', 10, 0.9},
+    { 43, 'C', 21, 0.4 },
+    { 47, 'f', 22, 0.7}
+  };
 	
 //   Testcase 1
-  float TestParameters1[3]={25.0, 70.0, 0.7};
-  TestBatteryIsOk(ALL_OK,TestParameters1);
+  TestBatteryIsOk(ALL_OK,TestParameters[0]);
 	
 //   Testcase 2
-  float TestParameters2[3]={50.0, 85.0, 0};
-  TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
+  TestBatteryIsOk(ALL_NOT_OK,TestParameters[1]);
 	
 //   Testcase 3
-  float TestParameters3[3]={40, 10, 0.9};
-  TestBatteryIsOk(ALL_NOT_OK,TestParameters3);
+  TestBatteryIsOk(ALL_NOT_OK,TestParameters[2]);
 	
 //   Testcase 4
-  float TestParameters4[3]={43.0, 21.0, 0.4};
-  TestBatteryIsOk(ALL_NOT_OK,TestParameters4);
+  TestBatteryIsOk(ALL_NOT_OK,TestParameters[3]);
 
 //   Testcase 5
   setRangeValues(BatteryParameterName.ParameterName[0],10.0,30.0);
@@ -283,4 +309,6 @@ int main() {
 //   Testcase 10
   setRangeValues(BatteryParameterName.ParameterName[1],10.0,50.0);
   TestBatteryParameterWithinRange(BatteryParameterName.ParameterName[1],ALL_NOT_OK,12);
+	
+	TestBatteryIsOk(ALL_OK,TestParameters[4]);
 }
