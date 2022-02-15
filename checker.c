@@ -63,7 +63,7 @@ void setRangeValues(char* ParameterName, float min, float max)
 }
 
 void setToleranceLimitValues(EV_BatteryParameterTypesForBMS BatteryParametersName, BatteryParameterToleranceValues* currentParamaterToleranceValues){
-	float ToleranceValueForBatteryParameter = (((float(WARNINGTOLERANCE))/100)*(parameterInfo[BatteryParametersName].maximumThreshold));
+	float ToleranceValueForBatteryParameter = ((((float)WARNINGTOLERANCE)/100)*(parameterInfo[BatteryParametersName].maximumThreshold));
 	printf("Check %f space\n",WARNINGTOLERANCE);
 	printf("Tolerance %f\n",ToleranceValueForBatteryParameter);
 	printf("MnThreshold %f\n",parameterInfo[BatteryParametersName].minimumThreshold);
