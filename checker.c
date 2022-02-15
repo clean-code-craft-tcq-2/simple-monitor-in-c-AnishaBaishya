@@ -175,9 +175,17 @@ void TestBatteryIsOk(bool expectedOutput,float testData[]){
 void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedOutput, float testParameter){
    int ParameterIndex = FetchParameterIndexFromName(BatteryParametersName);
    TestCaseCounter+=1;
-   bool testParameterStatus = isBatteryParametersWithinNormalRange(ParameterIndex,testParameter);
-   if(!testParameterStatus)
-	printALLOk(BatteryParametersName,TestCaseCounter);
+   bool BatteryErrorStatus = 0;
+   bool BatteryWarningStatus = 0;
+   bool testParameterStatus;
+	
+   CheckBatteryParameter(ParameterIndex,testParameter,&BatteryErrorStatus,&BatteryWarningStatus);
+   if(BatteryErrorStatus == 1 || BatteryWarningStatus ==1)
+	   testParameterStatus = ALL_NOT_OK;
+   else{
+	   testParameterStatus = ALL_OK;
+	   printALLOk(BatteryParametersName,TestCaseCounter);
+   }
    assert(testParameterStatus==expectedOutput);
 }
 
