@@ -46,6 +46,7 @@ int TestCaseCounter = 0;
 BatteryParameterInfo parameterInfo [NoOfParameter] ;
 
 typedef struct {
+char ParameterName[3][20];
 char messageAllOk[50];
 char messageLimitBreached[3][50];
 char messageToleranceLimitApproached[3][50];
@@ -55,6 +56,9 @@ DifferentDisplayMessage DisplayMessageBasedOnLanguageChosen;
 void DisplayMessageBasedOnSupportedLanguage(){
 	if(DISPLAYMESSAGE_LANGUAGE == ENGLISH)	
 	{
+		strcpy(DisplayMessageBasedOnLanguageChosen.ParameterName[0] ,"Temperature");
+		strcpy(DisplayMessageBasedOnLanguageChosen.ParameterName[1] ,"State of Charge");
+		strcpy(DisplayMessageBasedOnLanguageChosen.ParameterName[2] ,"Charge Rate");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageAllOk ,"Test parameter(s) within acceptable normal range");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0],"CAUTION ! ");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[1], " is less than threshold value.");
@@ -65,6 +69,9 @@ void DisplayMessageBasedOnSupportedLanguage(){
 	}
 	if(DISPLAYMESSAGE_LANGUAGE == GERMAN)	
 	{
+		strcpy(DisplayMessageBasedOnLanguageChosen.ParameterName[0] ,"Temperatur");
+		strcpy(DisplayMessageBasedOnLanguageChosen.ParameterName[1] ,"Ladezustand");
+		strcpy(DisplayMessageBasedOnLanguageChosen.ParameterName[2] ,"Ladestrom");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageAllOk ,"Testparameter innerhalb eines akzeptablen Normalbereichs");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0],"VORSICHT ! ");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[1], " kleiner als der Schwellenwert ist.");
@@ -77,13 +84,13 @@ void DisplayMessageBasedOnSupportedLanguage(){
 
 void PopulateParameterInfo(){
   	parameterInfo[0].parameter = TempParameter;
-	strcpy(parameterInfo[0].parameterName,"Temperature");
+	strcpy(parameterInfo[0].parameterName,DisplayMessageBasedOnLanguageChosen.ParameterName[0]);
 	parameterInfo[0].WarningSupported = EARLY_WARNING_SUPPORTED;
 	parameterInfo[1].parameter = SOCParameter;
-	strcpy(parameterInfo[1].parameterName, "SOC");
+	strcpy(parameterInfo[1].parameterName,DisplayMessageBasedOnLanguageChosen.ParameterName[1]);
 	parameterInfo[1].WarningSupported = EARLY_WARNING_SUPPORTED;
 	parameterInfo[2].parameter = ChargeRateParameter;
-	strcpy(parameterInfo[2].parameterName, "Charge Rate"); 
+	strcpy(parameterInfo[2].parameterName,DisplayMessageBasedOnLanguageChosen.ParameterName[2]); 
 	parameterInfo[2].WarningSupported = EARLY_WARNING_SUPPORTED;
 }
 	
@@ -229,9 +236,9 @@ int main() {
   DisplayMessageBasedOnSupportedLanguage();
   PopulateParameterInfo();
 		  
-  setRangeValues("Temperature",0.0,45.0);
-  setRangeValues("SOC",20.0,80.0);
-  setRangeValues("Charge Rate",0.0,0.8);
+  setRangeValues(DisplayMessageBasedOnLanguageChosen.ParameterName[0],0.0,45.0);
+  setRangeValues(DisplayMessageBasedOnLanguageChosen.ParameterName[1],20.0,80.0);
+  setRangeValues(DisplayMessageBasedOnLanguageChosen.ParameterName[2],0.0,0.8);
 	
 //   Testcase 1
   float TestParameters1[3]={25.0, 70.0, 0.7};
@@ -250,26 +257,26 @@ int main() {
   TestBatteryIsOk(ALL_NOT_OK,TestParameters4);
 
 //   Testcase 5
-  setRangeValues("Temperature",10.0,30.0);
-  TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0);
+  setRangeValues(DisplayMessageBasedOnLanguageChosen.ParameterName[0],10.0,30.0);
+  TestBatteryParameterWithinRange(DisplayMessageBasedOnLanguageChosen.ParameterName[0],ALL_NOT_OK,40.0);
 	
 //   Testcase 6
-  setRangeValues("SOC",10.0,70.0);
-  TestBatteryParameterWithinRange("SOC",ALL_OK,40.0);
+  setRangeValues(DisplayMessageBasedOnLanguageChosen.ParameterName[1],10.0,70.0);
+  TestBatteryParameterWithinRange(DisplayMessageBasedOnLanguageChosen.ParameterName[1],ALL_OK,40.0);
 	
 //   Testcase 7
-  setRangeValues("Charge Rate",0.0,0.6);
-  TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.8);
+  setRangeValues(DisplayMessageBasedOnLanguageChosen.ParameterName[2],0.0,0.6);
+  TestBatteryParameterWithinRange(DisplayMessageBasedOnLanguageChosen.ParameterName[2],ALL_NOT_OK,0.8);
 	
 //   Testcase 8
-  setRangeValues("Temperature",40.0,60.0);
-  TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,30.0);
+  setRangeValues(DisplayMessageBasedOnLanguageChosen.ParameterName[0],40.0,60.0);
+  TestBatteryParameterWithinRange(DisplayMessageBasedOnLanguageChosen.ParameterName[0],ALL_NOT_OK,30.0);
 	
 //   Testcase 9
-  setRangeValues("Charge Rate",0.0,0.6);
-  TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.58);
+  setRangeValues(DisplayMessageBasedOnLanguageChosen.ParameterName[2],0.0,0.6);
+  TestBatteryParameterWithinRange(DisplayMessageBasedOnLanguageChosen.ParameterName[2],ALL_NOT_OK,0.58);
 	
 //   Testcase 10
-  setRangeValues("SOC",10.0,50.0);
-  TestBatteryParameterWithinRange("SOC",ALL_NOT_OK,12);
+  setRangeValues(DisplayMessageBasedOnLanguageChosen.ParameterName[1],10.0,50.0);
+  TestBatteryParameterWithinRange(DisplayMessageBasedOnLanguageChosen.ParameterName[1],ALL_NOT_OK,12);
 }
