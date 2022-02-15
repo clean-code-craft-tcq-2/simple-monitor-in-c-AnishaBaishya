@@ -148,9 +148,9 @@ int FetchParameterIndexFromName(char* ParameterName){
 void BatteryIsOk(float testData[], bool* BatteryErrorStatus, bool* BatteryWarningStatus ) {
    int counter;	
    for (counter=0;counter<NoOfParameter;counter ++){
-	   BatteryErrorStatus|=isBatteryParametersWithinNormalRange(parameterInfo[counter].parameter, testData[counter]);
+	   *BatteryErrorStatus|=isBatteryParametersWithinNormalRange(parameterInfo[counter].parameter, testData[counter]);
 	   if(parameterInfo[counter].WarningSupported)
-		BatteryWarningStatus|=isBatteryParametersWithinToleranceLimit(parameterInfo[counter].parameter, testData[counter]); 
+		*BatteryWarningStatus|=isBatteryParametersWithinToleranceLimit(parameterInfo[counter].parameter, testData[counter]); 
    } 
 }
 
