@@ -49,8 +49,8 @@ void DisplayMessageBasedOnSupportedLanguage(){
 	if(MESSAGE_LANGUAGE == ENGLISH)
 	{
 		char messageAllOk[50] = " within acceptable normal range";
-		char messageLimitBreached[100][3]= {"CAUTION !"," is less than threshold value."," is more than threshold value"};
-		char messageToleranceLimitApproached[100][3] ={"WARNING !"," is approaching the lower threshold value"," is approaching the higher threshold value"};
+		char messageLimitBreached[3][100]= {"CAUTION !"," is less than threshold value."," is more than threshold value"};
+		char messageToleranceLimitApproached[3][100] ={"WARNING !"," is approaching the lower threshold value"," is approaching the higher threshold value"};
 	}
 }
 
