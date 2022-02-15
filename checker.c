@@ -219,4 +219,8 @@ int main() {
 //   Testcase 7
   setRangeValues("Temperature",40.0,60.0);
   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,30.0);
+	
+//   Testcase 6
+  setRangeValues("Charge Rate",0.0,0.6);
+  TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.58);
 }
