@@ -186,11 +186,11 @@ int main() {
   setRangeValues("Charge Rate",0.0,0.8);
 	
 //   Testcase 1
-  float TestParameters1[3]={25, 70, 0.7};
+  float TestParameters1[3]={25.0, 70.0, 0.7};
   TestBatteryIsOk(ALL_OK,TestParameters1);
 	
 //   Testcase 2
-  float TestParameters2[3]={50, 85, 0};
+  float TestParameters2[3]={50.0, 85.0, 0};
   TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
 	
 // //   Testcase 3
@@ -198,7 +198,7 @@ int main() {
 //   TestBatteryIsOk(ALL_NOT_OK,TestParameters3);
 	
 //   Testcase 4
-  float TestParameters4[3]={43, 21, 0.4};
+  float TestParameters4[3]={43.0, 21.0, 0.4};
   TestBatteryIsOk(ALL_NOT_OK,TestParameters4);
 
 // //   Testcase 4
