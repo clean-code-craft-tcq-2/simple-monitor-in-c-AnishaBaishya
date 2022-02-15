@@ -195,9 +195,9 @@ int main() {
 //   float TestParameters3[3]={40, 10, 0.9};
 //   TestBatteryIsOk(ALL_NOT_OK,TestParameters3);
 	
-// //   Testcase 4
-//   float TestParameters4[3]={43, 21, 0.4};
-//   TestBatteryIsOk(ALL_NOT_OK,TestParameters4);
+//   Testcase 4
+  float TestParameters4[3]={43, 21, 0.4};
+  TestBatteryIsOk(ALL_NOT_OK,TestParameters4);
 
 // //   Testcase 4
 //   setRangeValues("Temperature",10.0,30.0);
