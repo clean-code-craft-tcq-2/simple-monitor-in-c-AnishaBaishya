@@ -8,7 +8,7 @@ typedef enum {
   GERMAN
 } SupportedLanguages;
 
-#define MESSAGE_LANGUAGE		ENGLISH
+#define DISPLAYMESSAGE_LANGUAGE		ENGLISH
 #define ALL_OK				0
 #define ALL_NOT_OK			1
 
@@ -53,7 +53,7 @@ char messageToleranceLimitApproached[3][50];
 
 DifferentDisplayMessage DisplayMessageBasedOnLanguageChosen;
 void DisplayMessageBasedOnSupportedLanguage(){
-	if(MESSAGE_LANGUAGE == ENGLISH)	
+	if(DISPLAYMESSAGE_LANGUAGE == ENGLISH)	
 	{
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageAllOk ,"Test parameter(s) within acceptable normal range");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0],"CAUTION ! ");
@@ -63,7 +63,7 @@ void DisplayMessageBasedOnSupportedLanguage(){
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[1]," is approaching the lower threshold value.");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[2], " is approaching the higher threshold value.");
 	}
-	if(MESSAGE_LANGUAGE == GERMAN)	
+	if(DISPLAYMESSAGE_LANGUAGE == GERMAN)	
 	{
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageAllOk ,"Testparameter innerhalb eines akzeptablen Normalbereichs");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0],"VORSICHT ! ");
@@ -249,23 +249,27 @@ int main() {
   float TestParameters4[3]={43.0, 21.0, 0.4};
   TestBatteryIsOk(ALL_NOT_OK,TestParameters4);
 
-//   Testcase 4
+//   Testcase 5
   setRangeValues("Temperature",10.0,30.0);
   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0);
 	
-//   Testcase 5
+//   Testcase 6
   setRangeValues("SOC",10.0,70.0);
   TestBatteryParameterWithinRange("SOC",ALL_OK,40.0);
 	
-//   Testcase 6
+//   Testcase 7
   setRangeValues("Charge Rate",0.0,0.6);
   TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.8);
 	
-//   Testcase 7
+//   Testcase 8
   setRangeValues("Temperature",40.0,60.0);
   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,30.0);
 	
-//   Testcase 6
+//   Testcase 9
   setRangeValues("Charge Rate",0.0,0.6);
   TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.58);
+	
+//   Testcase 10
+  setRangeValues("SOC",10.0,50.0);
+  TestBatteryParameterWithinRange("SOC",ALL_NOT_OK,12);
 }
