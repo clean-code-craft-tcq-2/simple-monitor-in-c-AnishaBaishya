@@ -55,13 +55,13 @@ DifferentDisplayMessage DisplayMessageBasedOnLanguageChosen;
 void DisplayMessageBasedOnSupportedLanguage(){
 	if(MESSAGE_LANGUAGE == ENGLISH)	
 	{
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageAllOk ," within acceptable normal range");
-		DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0][50] = "CAUTION !";
-		DisplayMessageBasedOnLanguageChosen.messageLimitBreached[1][50] = " is less than threshold value.";
-		DisplayMessageBasedOnLanguageChosen.messageLimitBreached[2][50] = " is more than threshold value";
-		DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[0][50] = "WARNING !";
-		DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[1][50] = " is approaching the lower threshold value.";
-		DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[2][50] = " is approaching the higher threshold value.";
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageAllOk ,"Test parameter(s) within acceptable normal range");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached,"CAUTION !");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached, " is less than threshold value.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached," is more than threshold value");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached, "WARNING !");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached," is approaching the lower threshold value.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached, " is approaching the higher threshold value.");
 	}
 }
 
@@ -94,8 +94,8 @@ void setToleranceLimitValues(EV_BatteryParameterTypesForBMS BatteryParametersNam
 	currentParamaterToleranceValues->HighValueOfWarningTolerance = parameterInfo[BatteryParametersName].maximumThreshold - ToleranceValueForBatteryParameter;
 }
 
-void printALLOk(char* BatteryParameter, int TestCaseCounter){
-	printf("%d : %s %s\n",TestCaseCounter,BatteryParameter,DisplayMessageBasedOnLanguageChosen.messageAllOk);
+void printALLOk(int TestCaseCounter){
+	printf("%d : %s\n",TestCaseCounter,DisplayMessageBasedOnLanguageChosen.messageAllOk);
 }
 
 void printOnDisplayLimitBreached(char* BatteryParameter,char* Condition,int TestCaseCounter) {
@@ -193,7 +193,7 @@ void TestBatteryIsOk(bool expectedOutput,float testData[]){
 	   testBatteryStatus = ALL_NOT_OK;
    else{
 	   testBatteryStatus = ALL_OK;
-	   printALLOk("parameters",TestCaseCounter);
+	   printALLOk(TestCaseCounter);
    }
    assert(testBatteryStatus==expectedOutput);
 }
@@ -210,7 +210,7 @@ void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedO
 	   testParameterStatus = ALL_NOT_OK;
    else{
 	   testParameterStatus = ALL_OK;
-	   printALLOk(BatteryParametersName,TestCaseCounter);
+	   printALLOk(TestCaseCounter);
    }
    assert(testParameterStatus==expectedOutput);
 }
@@ -218,9 +218,7 @@ void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedO
 int main() {
   DisplayMessageBasedOnSupportedLanguage();
   PopulateParameterInfo();
-	
-printf("here %s \n",DisplayMessageBasedOnLanguageChosen.messageAllOk);
-	  
+		  
   setRangeValues("Temperature",0.0,45.0);
   setRangeValues("SOC",20.0,80.0);
   setRangeValues("Charge Rate",0.0,0.8);
