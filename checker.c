@@ -158,7 +158,7 @@ void BatteryIsOk(float testData[], bool* BatteryErrorStatus, bool* BatteryWarnin
    for (counter=0;counter<NoOfParameter;counter ++){
 	   *BatteryErrorStatus|=isBatteryParametersWithinNormalRange(parameterInfo[counter].parameter, testData[counter]);
 	   printf("Error %d \n" ,*BatteryErrorStatus);
-	   if(parameterInfo[counter].WarningSupported){
+	   if(BatteryErrorStatus == 0 && parameterInfo[counter].WarningSupported ==EARLY_WARNING_SUPPORTED ){
 		*BatteryWarningStatus|=isBatteryParametersWithinToleranceLimit(parameterInfo[counter].parameter, testData[counter]); 
 	   	printf("Warning %d \n" ,*BatteryWarningStatus);}
    } 
