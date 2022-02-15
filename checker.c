@@ -92,7 +92,7 @@ void setToleranceLimitValues(EV_BatteryParameterTypesForBMS BatteryParametersNam
 }
 
 void printALLOk(char* BatteryParameter, int TestCaseCounter){
-	//printf("%d : %s %s\n",TestCaseCounter,BatteryParameter,messageAllOk);
+	printf("%d : %s %s\n",TestCaseCounter,BatteryParameter,messageAllOk);
 }
 
 void printOnDisplayLimitBreached(char* BatteryParameter,char* Condition,int TestCaseCounter) {
