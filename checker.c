@@ -46,8 +46,8 @@ int TestCaseCounter = 0;
 BatteryParameterInfo parameterInfo [NoOfParameter] ;
 
 char messageAllOk[50];
-char messageLimitBreached[3][100];
-char messageToleranceLimitApproached[3][100];
+char messageLimitBreached[3][50];
+char messageToleranceLimitApproached[3][50];
 
 void DisplayMessageBasedOnSupportedLanguage(){
 	printf("%d : %d",MESSAGE_LANGUAGE,ENGLISH);
@@ -55,9 +55,9 @@ void DisplayMessageBasedOnSupportedLanguage(){
 		
 	{
 		printf("english");
-		messageAllOk[50] = " within acceptable normal range";
-		messageLimitBreached[3][100]= ["CAUTION !"," is less than threshold value."," is more than threshold value"];
-		messageToleranceLimitApproached[3][100] =["WARNING !"," is approaching the lower threshold value"," is approaching the higher threshold value"];
+		messageAllOk = " within acceptable normal range";
+		messageLimitBreached= {"CAUTION !"," is less than threshold value."," is more than threshold value"};
+		messageToleranceLimitApproached ={"WARNING !"," is approaching the lower threshold value"," is approaching the higher threshold value"};
 	}
 }
 
