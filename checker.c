@@ -41,7 +41,7 @@ typedef struct{
 	float Temperature;
 	char TempUnit[2];
 	float SOC;
-	float ChargeRate
+	float ChargeRate;
 }Struct_BatteryTestData;
 
 int StringsAreEqual(char * String1,char * String2){
@@ -210,17 +210,17 @@ void ConvertTempToCelcius(float* TemperatureValue){
 	printf("Celcius %f\n",*TemperatureValue);
 }
 void ConvertTestDataToArray(float* testData[],Struct_BatteryTestData* BatteryTestData){
-	if(BatteryTestData.TempUnit == 'f' || BatteryTestData.TempUnit == 'F')
+	if(BatteryTestData->TempUnit == 'f' || BatteryTestData->TempUnit == 'F')
 		ConvertTempToCelcius(&BatteryTestData.Temperature);
-	testData[0] = BatteryTestData.Temperature;
-	testData[1] = BatteryTestData.SOC;
-	testData[2] = BatteryTestData.ChargeRate;
+	testData[0] = BatteryTestData->Temperature;
+	testData[1] = BatteryTestData->SOC;
+	testData[2] = BatteryTestData->ChargeRate;
 }
 
 void BatteryIsOk(Struct_BatteryTestData* testData, bool* BatteryErrorStatus, bool* BatteryWarningStatus ) {
    int counter;	
    float testDataArray[3];
-   ConvertTestDataToArray(&testDataArray[],testData)
+   ConvertTestDataToArray(testDataArray,testData)
    for (counter=0;counter<NoOfParameter;counter ++){
 	   CheckBatteryParameter(parameterInfo[counter].parameter,testDataArray[counter],BatteryErrorStatus,BatteryWarningStatus);
    } 
