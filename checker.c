@@ -187,9 +187,9 @@ int main() {
   float TestParameters1[3]={25, 70, 0.7};
   TestBatteryIsOk(ALL_OK,TestParameters1);
 	
-// //   Testcase 2
-//   float TestParameters2[3]={50, 85, 0};
-//   TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
+//   Testcase 2
+  float TestParameters2[3]={50, 85, 0};
+  TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
 	
 // //   Testcase 3
 //   float TestParameters3[3]={40, 10, 0.9};
