@@ -185,13 +185,13 @@ int main() {
   setRangeValues("SOC",20.0,80.0);
   setRangeValues("Charge Rate",0.0,0.8);
 	
-//   Testcase 1
-  float TestParameters1[3]={25.0, 70.0, 0.7};
-  TestBatteryIsOk(ALL_OK,TestParameters1);
+// //   Testcase 1
+//   float TestParameters1[3]={25.0, 70.0, 0.7};
+//   TestBatteryIsOk(ALL_OK,TestParameters1);
 	
-//   Testcase 2
-  float TestParameters2[3]={50.0, 85.0, 0};
-  TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
+// //   Testcase 2
+//   float TestParameters2[3]={50.0, 85.0, 0};
+//   TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
 	
 // //   Testcase 3
 //   float TestParameters3[3]={40, 10, 0.9};
