@@ -9,7 +9,7 @@
 #define EARLY_WARNING_SUPPORTED		1
 #define EARLY_WARNING_NOTSUPPORTED	0
 
-#define WARNINGTOLERANCE 		5f
+#define WARNINGTOLERANCE 		5
 
 typedef enum {
   TempParameter,
