@@ -131,11 +131,6 @@ bool isBatteryParametersWithinNormalRange(EV_BatteryParameterTypesForBMS Battery
 	ParameterCheck= isBatteryParameter_LessThanLowRange(currentInput,BatteryParametersName);
 	if(!ParameterCheck)
 		ParameterCheck= isBatteryParameter_MoreThanHighRange(currentInput,BatteryParametersName);
-	else if (!ParameterCheck){
-		if(parameterInfo[BatteryParametersName].WarningSupported){
-			ParameterCheck=isBatteryParametersWithinToleranceLimit(BatteryParametersName,currentInput);
-		}
-	}
 	return ParameterCheck;		
 }
 
@@ -150,20 +145,27 @@ int FetchParameterIndexFromName(char* ParameterName){
    return ParameterIndex;	
 }
 		
-bool BatteryIsOk(float testData[]) {
-   bool BatteryStatus = 0;
+void BatteryIsOk(float testData[], bool* BatteryErrorStatus, bool* BatteryWarningStatus ) {
    int counter;	
    for (counter=0;counter<NoOfParameter;counter ++){
-   BatteryStatus|=isBatteryParametersWithinNormalRange(parameterInfo[counter].parameter, testData[counter]);
-   }
-   return (BatteryStatus);  
+	   BatteryErrorStatus|=isBatteryParametersWithinNormalRange(parameterInfo[counter].parameter, testData[counter]);
+	   if(parameterInfo[counter].WarningSupported)
+		BatteryWarningStatus|=isBatteryParametersWithinToleranceLimit(parameterInfo[counter].parameter, testData[counter]); 
+   } 
 }
 
 void TestBatteryIsOk(bool expectedOutput,float testData[]){
    TestCaseCounter+=1;
-   bool testBatteryStatus = BatteryIsOk(testData); 
-   if(!testBatteryStatus)
+   bool testBatteryStatus;
+   bool BatteryErrorStatus = 0;
+   bool BatteryWarningStatus = 0;
+   BatteryIsOk(testData,&BatteryErrorStatus,&BatteryWarningStatus); 
+   if(BatteryErrorStatus == 1 || BatteryWarningStatus ==1)
+	   testBatteryStatus = ALL_NOT_OK;
+   else{
+	   testBatteryStatus = ALL_OK;
 	   printALLOk("parameters",TestCaseCounter);
+   }
    assert(testBatteryStatus==expectedOutput);
 }
 
