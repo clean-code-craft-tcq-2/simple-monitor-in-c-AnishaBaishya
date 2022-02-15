@@ -48,9 +48,9 @@ BatteryParameterInfo parameterInfo [NoOfParameter] ;
 void DisplayMessageBasedOnSupportedLanguage(){
 	if(MESSAGE_LANGUAGE == ENGLISH)
 	{
-		messageAllOk[50] = " within acceptable normal range";
-		messageLimitBreached[100][3]= {"CAUTION !"," is less than threshold value."," is more than threshold value"};
-		messageToleranceLimitApproached[100][3] ={"WARNING !"," is approaching the lower threshold value"," is approaching the higher threshold value"};
+		char messageAllOk[50] = " within acceptable normal range";
+		char messageLimitBreached[100][3]= {"CAUTION !"," is less than threshold value."," is more than threshold value"};
+		char messageToleranceLimitApproached[100][3] ={"WARNING !"," is approaching the lower threshold value"," is approaching the higher threshold value"};
 	}
 }
 
