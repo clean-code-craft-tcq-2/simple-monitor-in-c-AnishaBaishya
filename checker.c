@@ -8,7 +8,7 @@ typedef enum {
   GERMAN
 } SupportedLanguages;
 
-#define MESSAGE_LANGUAGE		GERMAN
+#define MESSAGE_LANGUAGE		ENGLISH
 #define ALL_OK				0
 #define ALL_NOT_OK			1
 
