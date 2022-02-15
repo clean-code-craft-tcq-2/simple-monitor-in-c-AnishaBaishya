@@ -29,7 +29,7 @@ typedef struct {
 typedef struct {
 	float LowValueOfWarningTolerance;
 	float HighValueOfWarningTolerance;
-}BatteryParameterToleranceValues
+}BatteryParameterToleranceValues;
 
 int StringsAreEqual(char * String1,char * String2){
 	return (!(strcmp(String1,String2)));
@@ -42,13 +42,13 @@ BatteryParameterInfo parameterInfo [NoOfParameter] ;
 void PopulateParameterInfo(){
   	parameterInfo[0].parameter = TempParameter;
 	strcpy(parameterInfo[0].parameterName,"Temperature");
-	parameterInfo[0].WarningSupported = EARLY_WARNING_SUPPORTED
+	parameterInfo[0].WarningSupported = EARLY_WARNING_SUPPORTED;
 	parameterInfo[1].parameter = SOCParameter;
 	strcpy(parameterInfo[1].parameterName, "SOC");
-	parameterInfo[1].WarningSupported = EARLY_WARNING_SUPPORTED
+	parameterInfo[1].WarningSupported = EARLY_WARNING_SUPPORTED;
 	parameterInfo[2].parameter = ChargeRateParameter;
 	strcpy(parameterInfo[2].parameterName, "Charge Rate"); 
-	parameterInfo[2].WarningSupported = EARLY_WARNING_SUPPORTED
+	parameterInfo[2].WarningSupported = EARLY_WARNING_SUPPORTED;
 }
 	
 void setRangeValues(char* ParameterName, float min, float max)
@@ -104,7 +104,7 @@ bool isBatteryParameter_InLowerToleranceLimitRange(float currentInput, EV_Batter
 		MinToleranceLimitCheck=1;
 		printOnDisplayToleranceLimitApproached(parameterInfo[BatteryParametersName].parameterName,"lower",TestCaseCounter);
 	}
-	return MinToleranceLimitCheck
+	return MinToleranceLimitCheck;
 }
 
 bool isBatteryParameter_InHigherToleranceLimitRange(float currentInput, EV_BatteryParameterTypesForBMS BatteryParametersName, float higherToleranceLimit){
@@ -113,7 +113,7 @@ bool isBatteryParameter_InHigherToleranceLimitRange(float currentInput, EV_Batte
 		MaxToleranceLimitCheck=1;
 		printOnDisplayToleranceLimitApproached(parameterInfo[BatteryParametersName].parameterName,"higher",TestCaseCounter);
 	}
-	return MaxToleranceLimitCheck
+	return MaxToleranceLimitCheck;
 }
 
 bool isBatteryParametersWithinToleranceLimit(EV_BatteryParameterTypesForBMS BatteryParametersName,float currentInput){
