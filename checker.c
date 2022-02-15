@@ -56,12 +56,12 @@ void DisplayMessageBasedOnSupportedLanguage(){
 	if(MESSAGE_LANGUAGE == ENGLISH)	
 	{
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageAllOk ,"Test parameter(s) within acceptable normal range");
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached,"CAUTION !");
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached, " is less than threshold value.");
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached," is more than threshold value");
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached, "WARNING !");
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached," is approaching the lower threshold value.");
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached, " is approaching the higher threshold value.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0],"CAUTION ! ");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[1], " is less than threshold value. Take appropriate action.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[2]," is more than threshold value. Take appropriate action.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[0], "WARNING ! ");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[1]," is approaching the lower threshold value. Take appropriate action.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[2], " is approaching the higher threshold value. Take appropriate action.");
 	}
 }
 
@@ -98,19 +98,19 @@ void printALLOk(int TestCaseCounter){
 	printf("%d : %s\n",TestCaseCounter,DisplayMessageBasedOnLanguageChosen.messageAllOk);
 }
 
-void printOnDisplayLimitBreached(char* BatteryParameter,char* Condition,int TestCaseCounter) {
-    printf("Testcase %d : CAUTION ! Input %s is %s than the threshold value. Take appropriate action\n",TestCaseCounter,BatteryParameter,Condition);
+void printOnDisplayLimitBreached(char* BatteryParameter,char* MessageBody,int TestCaseCounter) {
+    printf("%d : %s%s%s\n",TestCaseCounter,DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0],BatteryParameter,MessageBody);
 }
 
-void printOnDisplayToleranceLimitApproached(char* BatteryParameter,char* Condition,int TestCaseCounter) {
-    printf("Testcase %d : WARNING ! Input %s is approaching the %s threshold value. Take appropriate action\n",TestCaseCounter,BatteryParameter,Condition);
+void printOnDisplayToleranceLimitApproached(char* BatteryParameter,char* MessageBody,int TestCaseCounter) {
+    printf("%d : %s%s%s\n",TestCaseCounter,DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[0],BatteryParameter,MessageBody);
 }
 
 bool isBatteryParameter_LessThanLowRange(float currentInput, EV_BatteryParameterTypesForBMS BatteryParametersName) {
     bool MinThresholdCheck = 0;
     if(currentInput < parameterInfo[BatteryParametersName].minimumThreshold){
 	    MinThresholdCheck=1;
-	    printOnDisplayLimitBreached(parameterInfo[BatteryParametersName].parameterName,"less",TestCaseCounter);
+	    printOnDisplayLimitBreached(parameterInfo[BatteryParametersName].parameterName,DisplayMessageBasedOnLanguageChosen.messageLimitBreached[1],TestCaseCounter);
     }
     return MinThresholdCheck;
 }
@@ -119,7 +119,7 @@ bool isBatteryParameter_MoreThanHighRange(float currentInput, EV_BatteryParamete
     bool MaxThresholdCheck = 0;
     if(currentInput > parameterInfo[BatteryParametersName].maximumThreshold){
 	    MaxThresholdCheck=1;
-	    printOnDisplayLimitBreached(parameterInfo[BatteryParametersName].parameterName,"more",TestCaseCounter);
+	    printOnDisplayLimitBreached(parameterInfo[BatteryParametersName].parameterName,DisplayMessageBasedOnLanguageChosen.messageLimitBreached[2],TestCaseCounter);
     }
     return MaxThresholdCheck;
 }
@@ -128,7 +128,7 @@ bool isBatteryParameter_InLowerToleranceLimitRange(float currentInput, EV_Batter
 	bool MinToleranceLimitCheck = 0;
 	if(currentInput<=lowerToleranceLimit){
 		MinToleranceLimitCheck=1;
-		printOnDisplayToleranceLimitApproached(parameterInfo[BatteryParametersName].parameterName,"lower",TestCaseCounter);
+		printOnDisplayToleranceLimitApproached(parameterInfo[BatteryParametersName].parameterName,DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[1],TestCaseCounter);
 	}
 	return MinToleranceLimitCheck;
 }
@@ -137,7 +137,7 @@ bool isBatteryParameter_InHigherToleranceLimitRange(float currentInput, EV_Batte
 	bool MaxToleranceLimitCheck = 0;
 	if(currentInput>=higherToleranceLimit){
 		MaxToleranceLimitCheck=1;
-		printOnDisplayToleranceLimitApproached(parameterInfo[BatteryParametersName].parameterName,"higher",TestCaseCounter);
+		printOnDisplayToleranceLimitApproached(parameterInfo[BatteryParametersName].parameterName,DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[2],TestCaseCounter);
 	}
 	return MaxToleranceLimitCheck;
 }
