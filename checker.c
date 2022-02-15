@@ -176,7 +176,7 @@ void TestBatteryIsOk(bool expectedOutput,float testData[]){
 	   testBatteryStatus = ALL_OK;
 	   printALLOk("parameters",TestCaseCounter);
    }
-//    assert(testBatteryStatus==expectedOutput);
+   assert(testBatteryStatus==expectedOutput);
 }
 
 void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedOutput, float testParameter){
