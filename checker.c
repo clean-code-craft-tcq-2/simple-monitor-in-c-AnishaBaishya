@@ -50,26 +50,15 @@ char messageLimitBreached[3][50];
 char messageToleranceLimitApproached[3][50];
 
 void DisplayMessageBasedOnSupportedLanguage(){
-	printf("%d : %d",MESSAGE_LANGUAGE,ENGLISH);
-	if(MESSAGE_LANGUAGE == ENGLISH)
-		
+	if(MESSAGE_LANGUAGE == ENGLISH)	
 	{
-		printf("english");
 		messageAllOk[50] = " within acceptable normal range";
 		messageLimitBreached[0][50] = "CAUTION !";
 		messageLimitBreached[1][50] = " is less than threshold value.";
 		messageLimitBreached[2][50] = " is more than threshold value";
-		
-// 		messageLimitBreached[3][50]= {
-// 			"CAUTION !",
-// 			" is less than threshold value.",
-// 			" is more than threshold value"
-// 			};
-		messageToleranceLimitApproached[3][50] ={
-			"WARNING !",
-			" is approaching the lower threshold value",
-			" is approaching the higher threshold value"
-			};
+		messageToleranceLimitApproached[0][50] = "WARNING !";
+		messageToleranceLimitApproached[1][50] = " is approaching the lower threshold value.";
+		messageToleranceLimitApproached[2][50] = " is approaching the higher threshold value.";
 	}
 }
 
