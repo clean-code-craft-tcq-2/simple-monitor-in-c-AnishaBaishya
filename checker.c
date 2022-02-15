@@ -55,9 +55,17 @@ void DisplayMessageBasedOnSupportedLanguage(){
 		
 	{
 		printf("english");
-		messageAllOk = " within acceptable normal range";
-		messageLimitBreached= {"CAUTION !"," is less than threshold value."," is more than threshold value"};
-		messageToleranceLimitApproached ={"WARNING !"," is approaching the lower threshold value"," is approaching the higher threshold value"};
+		messageAllOk[50] = " within acceptable normal range";
+		messageLimitBreached[3][50]= {
+			"CAUTION !",
+			" is less than threshold value.",
+			" is more than threshold value"
+			};
+		messageToleranceLimitApproached[3][50] ={
+			"WARNING !",
+			" is approaching the lower threshold value",
+			" is approaching the higher threshold value"
+			};
 	}
 }
 
