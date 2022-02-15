@@ -53,8 +53,9 @@ char messageToleranceLimitApproached[3][50];
 
 typedef struct{
 char ParameterName[NoOfParameter][20];
-}BatteryParameterName;
+}BatteryParameterNameList;
 
+BatteryParameterNameList BatteryParameterName;
 DifferentDisplayMessage DisplayMessageBasedOnLanguageChosen;
 void DisplayMessageBasedOnSupportedLanguage(){
 	if(DISPLAYMESSAGE_LANGUAGE == ENGLISH)	
