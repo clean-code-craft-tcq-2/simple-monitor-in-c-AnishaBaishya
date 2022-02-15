@@ -45,20 +45,23 @@ int TestCaseCounter = 0;
 
 BatteryParameterInfo parameterInfo [NoOfParameter] ;
 
+typedef struct {
 char messageAllOk[50];
 char messageLimitBreached[3][50];
 char messageToleranceLimitApproached[3][50];
+}DifferentDisplayMessage
 
+DifferentDisplayMessage DisplayMessageBasedOnLanguageChosen;
 void DisplayMessageBasedOnSupportedLanguage(){
 	if(MESSAGE_LANGUAGE == ENGLISH)	
 	{
-		messageAllOk[50] = " within acceptable normal range";
-		messageLimitBreached[0][50] = "CAUTION !";
-		messageLimitBreached[1][50] = " is less than threshold value.";
-		messageLimitBreached[2][50] = " is more than threshold value";
-		messageToleranceLimitApproached[0][50] = "WARNING !";
-		messageToleranceLimitApproached[1][50] = " is approaching the lower threshold value.";
-		messageToleranceLimitApproached[2][50] = " is approaching the higher threshold value.";
+		DisplayMessageBasedOnLanguageChosen.messageAllOk[50] = " within acceptable normal range";
+		DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0][50] = "CAUTION !";
+		DisplayMessageBasedOnLanguageChosen.messageLimitBreached[1][50] = " is less than threshold value.";
+		DisplayMessageBasedOnLanguageChosen.messageLimitBreached[2][50] = " is more than threshold value";
+		DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[0][50] = "WARNING !";
+		DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[1][50] = " is approaching the lower threshold value.";
+		DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[2][50] = " is approaching the higher threshold value.";
 	}
 }
 
@@ -92,7 +95,7 @@ void setToleranceLimitValues(EV_BatteryParameterTypesForBMS BatteryParametersNam
 }
 
 void printALLOk(char* BatteryParameter, int TestCaseCounter){
-	printf("%d : %s %s\n",TestCaseCounter,BatteryParameter,messageAllOk);
+	printf("%d : %s %s\n",TestCaseCounter,BatteryParameter,DisplayMessageBasedOnLanguageChosen.messageAllOk);
 }
 
 void printOnDisplayLimitBreached(char* BatteryParameter,char* Condition,int TestCaseCounter) {
