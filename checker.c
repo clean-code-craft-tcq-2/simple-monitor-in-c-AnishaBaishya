@@ -57,11 +57,11 @@ void DisplayMessageBasedOnSupportedLanguage(){
 	{
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageAllOk ,"Test parameter(s) within acceptable normal range");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[0],"CAUTION ! ");
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[1], " is less than threshold value. Take appropriate action.");
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[2]," is more than threshold value. Take appropriate action.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[1], " is less than threshold value.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageLimitBreached[2]," is more than threshold value.");
 		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[0], "WARNING ! ");
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[1]," is approaching the lower threshold value. Take appropriate action.");
-		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[2], " is approaching the higher threshold value. Take appropriate action.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[1]," is approaching the lower threshold value.");
+		strcpy(DisplayMessageBasedOnLanguageChosen.messageToleranceLimitApproached[2], " is approaching the higher threshold value.");
 	}
 }
 
