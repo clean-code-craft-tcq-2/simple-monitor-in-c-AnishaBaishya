@@ -149,8 +149,10 @@ void BatteryIsOk(float testData[], bool* BatteryErrorStatus, bool* BatteryWarnin
    int counter;	
    for (counter=0;counter<NoOfParameter;counter ++){
 	   *BatteryErrorStatus|=isBatteryParametersWithinNormalRange(parameterInfo[counter].parameter, testData[counter]);
-	   if(parameterInfo[counter].WarningSupported)
+	   print("Error %d \n" ,*BatteryErrorStatus);
+	   if(parameterInfo[counter].WarningSupported){
 		*BatteryWarningStatus|=isBatteryParametersWithinToleranceLimit(parameterInfo[counter].parameter, testData[counter]); 
+	   	print("Warning %d \n" ,*BatteryWarningStatus);}
    } 
 }
 
