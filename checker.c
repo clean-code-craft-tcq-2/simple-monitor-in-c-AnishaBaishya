@@ -64,8 +64,8 @@ void setRangeValues(char* ParameterName, float min, float max)
 
 void setToleranceLimitValues(EV_BatteryParameterTypesForBMS BatteryParametersName, BatteryParameterToleranceValues* currentParamaterToleranceValues){
 	float ToleranceValueForBatteryParameter = ((WARNINGTOLERANCE/100)*(parameterInfo[BatteryParametersName].maximumThreshold));
-	currentParamaterToleranceValues.LowValueOfWarningTolerance = parameterInfo[BatteryParametersName].minimumThreshold + ToleranceValueForBatteryParameter;
-	currentParamaterToleranceValues.HighValueOfWarningTolerance = parameterInfo[BatteryParametersName].maximumThreshold - ToleranceValueForBatteryParameter;
+	currentParamaterToleranceValues->LowValueOfWarningTolerance = parameterInfo[BatteryParametersName].minimumThreshold + ToleranceValueForBatteryParameter;
+	currentParamaterToleranceValues->HighValueOfWarningTolerance = parameterInfo[BatteryParametersName].maximumThreshold - ToleranceValueForBatteryParameter;
 }
 
 void printALLOk(char* BatteryParameter, int TestCaseCounter){
