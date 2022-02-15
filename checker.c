@@ -49,7 +49,7 @@ typedef struct {
 char messageAllOk[50];
 char messageLimitBreached[3][50];
 char messageToleranceLimitApproached[3][50];
-}DifferentDisplayMessage
+}DifferentDisplayMessage;
 
 DifferentDisplayMessage DisplayMessageBasedOnLanguageChosen;
 void DisplayMessageBasedOnSupportedLanguage(){
