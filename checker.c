@@ -195,35 +195,35 @@ int main() {
   setRangeValues("SOC",20.0,80.0);
   setRangeValues("Charge Rate",0.0,0.8);
 	
-// //   Testcase 1
-//   float TestParameters1[3]={25.0, 70.0, 0.7};
-//   TestBatteryIsOk(ALL_OK,TestParameters1);
+//   Testcase 1
+  float TestParameters1[3]={25.0, 70.0, 0.7};
+  TestBatteryIsOk(ALL_OK,TestParameters1);
 	
-// //   Testcase 2
-//   float TestParameters2[3]={50.0, 85.0, 0};
-//   TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
+//   Testcase 2
+  float TestParameters2[3]={50.0, 85.0, 0};
+  TestBatteryIsOk(ALL_NOT_OK,TestParameters2);
 	
-// //   Testcase 3
-//   float TestParameters3[3]={40, 10, 0.9};
-//   TestBatteryIsOk(ALL_NOT_OK,TestParameters3);
+//   Testcase 3
+  float TestParameters3[3]={40, 10, 0.9};
+  TestBatteryIsOk(ALL_NOT_OK,TestParameters3);
 	
 //   Testcase 4
   float TestParameters4[3]={43.0, 21.0, 0.4};
   TestBatteryIsOk(ALL_NOT_OK,TestParameters4);
 
-// //   Testcase 4
-//   setRangeValues("Temperature",10.0,30.0);
-//   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0);
+//   Testcase 4
+  setRangeValues("Temperature",10.0,30.0);
+  TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,40.0);
 	
-// //   Testcase 5
-//   setRangeValues("SOC",10.0,70.0);
-//   TestBatteryParameterWithinRange("SOC",ALL_OK,40.0);
+//   Testcase 5
+  setRangeValues("SOC",10.0,70.0);
+  TestBatteryParameterWithinRange("SOC",ALL_OK,40.0);
 	
-// //   Testcase 6
-//   setRangeValues("Charge Rate",0.0,0.6);
-//   TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.8);
+//   Testcase 6
+  setRangeValues("Charge Rate",0.0,0.6);
+  TestBatteryParameterWithinRange("Charge Rate",ALL_NOT_OK,0.8);
 	
-// //   Testcase 7
-//   setRangeValues("Temperature",40.0,60.0);
-//   TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,30.0);
+//   Testcase 7
+  setRangeValues("Temperature",40.0,60.0);
+  TestBatteryParameterWithinRange("Temperature",ALL_NOT_OK,30.0);
 }
