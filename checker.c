@@ -64,10 +64,6 @@ void setRangeValues(char* ParameterName, float min, float max)
 
 void setToleranceLimitValues(EV_BatteryParameterTypesForBMS BatteryParametersName, BatteryParameterToleranceValues* currentParamaterToleranceValues){
 	float ToleranceValueForBatteryParameter = ((((float)WARNINGTOLERANCE)/100)*(parameterInfo[BatteryParametersName].maximumThreshold));
-	printf("Check %f space\n",WARNINGTOLERANCE);
-	printf("Tolerance %f\n",ToleranceValueForBatteryParameter);
-	printf("MnThreshold %f\n",parameterInfo[BatteryParametersName].minimumThreshold);
-	printf("MaxThreshold %f\n",parameterInfo[BatteryParametersName].maximumThreshold);
 	currentParamaterToleranceValues->LowValueOfWarningTolerance = parameterInfo[BatteryParametersName].minimumThreshold + ToleranceValueForBatteryParameter;
 	currentParamaterToleranceValues->HighValueOfWarningTolerance = parameterInfo[BatteryParametersName].maximumThreshold - ToleranceValueForBatteryParameter;
 }
@@ -106,7 +102,6 @@ bool isBatteryParameter_InLowerToleranceLimitRange(float currentInput, EV_Batter
 	bool MinToleranceLimitCheck = 0;
 	if(currentInput<=lowerToleranceLimit){
 		MinToleranceLimitCheck=1;
-		printf("%s LowLimit\n",parameterInfo[BatteryParametersName].parameterName);
 		printOnDisplayToleranceLimitApproached(parameterInfo[BatteryParametersName].parameterName,"lower",TestCaseCounter);
 	}
 	return MinToleranceLimitCheck;
@@ -116,7 +111,6 @@ bool isBatteryParameter_InHigherToleranceLimitRange(float currentInput, EV_Batte
 	bool MaxToleranceLimitCheck = 0;
 	if(currentInput>=higherToleranceLimit){
 		MaxToleranceLimitCheck=1;
-		printf("%s HighLimit\n",parameterInfo[BatteryParametersName].parameterName);
 		printOnDisplayToleranceLimitApproached(parameterInfo[BatteryParametersName].parameterName,"higher",TestCaseCounter);
 	}
 	return MaxToleranceLimitCheck;
@@ -126,8 +120,6 @@ bool isBatteryParametersWithinToleranceLimit(EV_BatteryParameterTypesForBMS Batt
 	bool ParameterCheck;
 	BatteryParameterToleranceValues currentParamaterToleranceValues;
 	setToleranceLimitValues(BatteryParametersName,&currentParamaterToleranceValues);
-	printf("High %f \n",currentParamaterToleranceValues.HighValueOfWarningTolerance);
-	printf("Low %d \n",currentParamaterToleranceValues.LowValueOfWarningTolerance);
 	ParameterCheck= isBatteryParameter_InLowerToleranceLimitRange(currentInput,BatteryParametersName,currentParamaterToleranceValues.LowValueOfWarningTolerance);
 	if(!ParameterCheck)
 		ParameterCheck= isBatteryParameter_InHigherToleranceLimitRange(currentInput,BatteryParametersName,currentParamaterToleranceValues.HighValueOfWarningTolerance);
@@ -154,10 +146,8 @@ int FetchParameterIndexFromName(char* ParameterName){
 }
 void CheckBatteryParameter(EV_BatteryParameterTypesForBMS BatteryParametersName,float testBatteryParameter, bool* BatteryErrorStatus, bool* BatteryWarningStatus){
 	*BatteryErrorStatus|=isBatteryParametersWithinNormalRange(BatteryParametersName, testBatteryParameter);
-	printf("Error %d \n" ,*BatteryErrorStatus);
-	if(*BatteryErrorStatus == 0){
+	if(*BatteryErrorStatus == 0)
 		*BatteryWarningStatus|=isBatteryParametersWithinToleranceLimit(BatteryParametersName, testBatteryParameter); 
-		printf("Warning %d \n" ,*BatteryWarningStatus);}
 }
 
 void BatteryIsOk(float testData[], bool* BatteryErrorStatus, bool* BatteryWarningStatus ) {
