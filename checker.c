@@ -205,6 +205,7 @@ void TestBatteryParameterWithinRange(char* BatteryParametersName, bool expectedO
 }
 
 int main() {
+  DisplayMessageBasedOnSupportedLanguage();
   PopulateParameterInfo();
 	  
   setRangeValues("Temperature",0.0,45.0);
