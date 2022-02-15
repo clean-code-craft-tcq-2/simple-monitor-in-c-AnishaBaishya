@@ -46,8 +46,11 @@ int TestCaseCounter = 0;
 BatteryParameterInfo parameterInfo [NoOfParameter] ;
 
 void DisplayMessageBasedOnSupportedLanguage(){
+	printf("%d : %d",MESSAGE_LANGUAGE,ENGLISH);
 	if(MESSAGE_LANGUAGE == ENGLISH)
+		
 	{
+		printf("english");
 		char messageAllOk[50] = " within acceptable normal range";
 		char messageLimitBreached[3][100]= {"CAUTION !"," is less than threshold value."," is more than threshold value"};
 		char messageToleranceLimitApproached[3][100] ={"WARNING !"," is approaching the lower threshold value"," is approaching the higher threshold value"};
@@ -84,7 +87,7 @@ void setToleranceLimitValues(EV_BatteryParameterTypesForBMS BatteryParametersNam
 }
 
 void printALLOk(char* BatteryParameter, int TestCaseCounter){
-	printf("%d : %s %s\n",TestCaseCounter,BatteryParameter,messageAllOk);
+	//printf("%d : %s %s\n",TestCaseCounter,BatteryParameter,messageAllOk);
 }
 
 void printOnDisplayLimitBreached(char* BatteryParameter,char* Condition,int TestCaseCounter) {
